@@ -33,6 +33,7 @@ import com.gggw.core.factory.impl.CounterServiceFactory;
 import com.gggw.service.counter.service.CounterService0002;
 import com.gggw.service.system.SysUserService;
 import com.gggw.system.service.IImageCodeService;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * ClassName:LoginController <br/>
@@ -69,6 +70,18 @@ public class LoginController extends BaseController{
 	private CounterServiceFactory counterFactory;
 	@Autowired
 	private IImageCodeService verifyCodeService;
+
+	/**
+	 * 请求登录，验证用户
+	 */
+	@RequestMapping(value="toLogin")
+	@ResponseBody
+	public ModelAndView toLogin(HttpServletRequest request, HttpServletResponse response)throws Exception{
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("ui/back/login");
+		return modelAndView;
+	}
+
 	/**
 	 * 请求登录，验证用户
 	 */
