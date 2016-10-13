@@ -95,7 +95,7 @@
                     <a href="${contextPath }/ui/front/Me.jsp">Me</a>
                 </li>
                 <li>
-                    <a href="${contextPath }/ui/back/login.jsp">little thing</a>
+                    <a href="${contextPath }/toLogin">little thing</a>
                 </li>
                 <li>
                     <a href="#">Setting</a>
