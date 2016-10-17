@@ -177,6 +177,18 @@
 															发送!
 														</button>
 													</div>
+													<div class="clearfix">
+														<button type="button" id="set_bean_cookie_button" class="width-35 pull-right btn btn-sm btn-danger">
+															<i class="icon-lightbulb"></i>
+															设置bean
+														</button>
+													</div>
+													<div class="clearfix">
+														<button type="button" id="get_bean_cookie_button" class="width-35 pull-right btn btn-sm btn-danger">
+															<i class="icon-lightbulb"></i>
+															读取bean
+														</button>
+													</div>
 												</fieldset>
 											</form>
 										</div><!-- /widget-main -->
@@ -285,6 +297,10 @@
 			 jQuery('#'+id).addClass('visible');
 			}
 			
+			$(function(){
+				$("#imageCode").attr("src", "imageCode.img?d=" + new Date().getTime());
+			});
+			
 			$("#loginBtn").click(function() {
 			
 				var userNo = $("#loginUserNo").val();
@@ -337,6 +353,7 @@
 				$("#imageCode").attr("src", "imageCode.img?d=" + new Date().getTime());
 			}); 
 			
+			/**验证cookie*/
 			$("#check_code_button").click(function() {
 				var verifyCode = $("#verify_code").val();
 				var url = "checkCookie";
@@ -348,9 +365,27 @@
 				});
 			});
 			
-			$(function(){
-				$("#imageCode").attr("src", "imageCode.img?d=" + new Date().getTime());
+			
+			/** cookie写入bean */
+			$("#set_bean_cookie_button").click(function() {
+				var url = "setBeanCookie";
+				var params = {
+				}
+				$.getJSON(url, params, function(data) {
+					alert(data.result_info);				
+				});
 			});
+			
+			/** cookie读取bean */
+			$("#get_bean_cookie_button").click(function() {
+				var url = "getBeanCookie";
+				var params = {
+				}
+				$.getJSON(url, params, function(data) {
+					alert(data.result_info);				
+				});
+			});
+			
 		</script>
 		
 		
