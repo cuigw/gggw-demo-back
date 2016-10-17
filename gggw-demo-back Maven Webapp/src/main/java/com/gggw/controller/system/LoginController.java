@@ -30,6 +30,7 @@ import com.gggw.util.PageData;
 import com.gggw.util.jedis.RedisClientUtil;
 import com.gggw.controller.base.BaseController;
 import com.gggw.core.factory.impl.CounterServiceFactory;
+import com.gggw.entity.system.BaseSysUser;
 import com.gggw.service.counter.service.CounterService0002;
 import com.gggw.service.system.SysUserService;
 import com.gggw.system.service.IImageCodeService;
@@ -148,9 +149,38 @@ public class LoginController extends BaseController{
 		return FastJsonUtil.toJSONString(map);
 	}
 	
+	/**
+	 * 测试bean写入cookie
+	 */
+	@RequestMapping(value="setBeanCookie")
+	@ResponseBody
+	public Object setBeanCookie(HttpServletRequest request, HttpServletResponse response)throws Exception{
+		Map<String,String> map = new HashMap<String,String>();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		BaseSysUser baseSysUser = new BaseSysUser();
+		baseSysUser.setUserName("setBeanCookie");
+		baseSysUser.setUserNo("123123");
+		baseSysUser.setUserPwd("ggggw");
+		
+		CookieUtil.writeObject(request, response, "Base_sys_user_session", baseSysUser);
+		map.put("result_info", "已设置");
+		return FastJsonUtil.toJSONString(map);
+	}
 	
-	
-	
+	/**
+	 * 测试cookie读取bean
+	 */
+	@RequestMapping(value="getBeanCookie")
+	@ResponseBody
+	public Object getBeanCookie(HttpServletRequest request, HttpServletResponse response)throws Exception{
+		Map<String,String> map = new HashMap<String,String>();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		BaseSysUser baseSysUser = (BaseSysUser) CookieUtil.readObject(request, "Base_sys_user_session", BaseSysUser.class);
+		map.put("result_info", FastJsonUtil.toJSONString(baseSysUser));
+		return FastJsonUtil.toJSONString(map);
+	}
 	
 	//=========================================  tool Functions  start  ===========================================//
 	

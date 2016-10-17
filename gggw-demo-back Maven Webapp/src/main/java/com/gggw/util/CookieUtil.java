@@ -3,12 +3,16 @@ package com.gggw.util;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 
@@ -155,6 +159,121 @@ public class CookieUtil {
 				}
 			}
 		}
+	}
+	
+	/**
+	 * 功能说明: 把对象写入到cookie中<br>
+	 * 系统版本: @version 1.0<br>
+	 * 开发人员: @author cgw<br>
+	 * 开发时间: 2016-10-17 上午9:30:58<br>
+	 */
+	public static void writeObject(HttpServletRequest request, HttpServletResponse response, String key, Object bean) {
+		try {
+			Map<String, String> tokenMap = split2TokenMap(key, bean);
+			
+			// 写cookie
+			if (tokenMap != null && !tokenMap.isEmpty()) {
+				/**
+				 * Iterator遍历				 
+				Set<Map.Entry<String, String>> entryMap = tokenMap.entrySet();
+				Iterator<Map.Entry<String, String>> it = entryMap.iterator();
+				while (it.hasNext()) {
+					Entry<String, String> entry = it.next();
+					Cookie tmpCookie = new Cookie(entry.getKey(), entry.getValue());
+					tmpCookie.setPath("/");
+					tmpCookie.setHttpOnly(true);
+					response.addCookie(tmpCookie);
+				}*/
+				
+				for (Map.Entry<String, String> entry  : tokenMap.entrySet()) {
+					Cookie tmpCookie = new Cookie(entry.getKey(), entry.getValue());
+					tmpCookie.setPath("/");
+					tmpCookie.setHttpOnly(true);
+					response.addCookie(tmpCookie);
+				}
+			}
+		} catch (Exception e) {
+			logger.error("对象写入cookie失败", e);
+		}
+		
+	}
+	
+	/**
+	 * 功能说明: 将对象序列化、加密、做切片，返回map<br>
+	 * 系统版本: @version 1.0<br>
+	 * 开发人员: @author cgw<br>
+	 * 开发时间: 2016-10-17 上午10:09:28<br>
+	 */
+	public static Map<String, String> split2TokenMap(String key, Object object) throws Exception {
+		// 1.序列化
+		String jsonStr = FastJsonUtil.toJSONString(object);
+		// 2.加密
+		String encStr = encryptionCookie(jsonStr);
+		// 3.编码
+		String base64String = Base64.encodeBase64String(encStr.getBytes());		
+		// 4.切片
+		Map<String, String> sliceMap = ParamUtil.splitParam(key, base64String);
+		return sliceMap;
+	}
+	
+	/**
+	 * 功能说明: cookie加密<br>
+	 * 系统版本: @version 1.0<br>
+	 * 开发人员: @author cgw<br>
+	 * 开发时间: 2016-10-17 上午10:13:01<br>
+	 */
+	public static String encryptionCookie (String toEncrypt) throws Exception {
+		String keyString = MD5.md5Encrypt(PropertiesUtils.get("gggw.cookie.encryptkey", "cuigaowei"));
+		String cookieEncryptStr = AESUtil.encrypt(toEncrypt, keyString);
+		return cookieEncryptStr;
+	}
+	
+	/**
+	 * 功能说明: 从cookie中读取对象<br>
+	 * 系统版本: @version 1.0<br>
+	 * 开发人员: @author cgw<br>
+	 * 开发时间: 2016-10-17 下午1:22:21<br>
+	 */
+	public static Object readObject(HttpServletRequest request, String key, Class clazz) {
+		if (request == null || StringUtils.isEmpty(key)) {
+			return null;
+		}
+		try {
+			Cookie[] cookies = request.getCookies();
+			if (cookies != null && cookies.length > 0) {
+				// 1.读cookie
+				Map<String, String> params = new HashMap<String, String>();
+				for (Cookie cookie : cookies) {
+					String name = cookie.getName();
+					String value = cookie.getValue();
+					params.put(name, value);
+				}
+				// 2.组装切片
+				String base64Str = ParamUtil.mergeParam(key, params);
+				// 3.解码
+				byte[] buffer = Base64.decodeBase64(base64Str);
+				// 4.解密
+				String plainStr = decryptionCookie(new String(buffer));
+				// 5.反序列化
+				return FastJsonUtil.parseObject(plainStr, clazz);
+			} 	
+		} catch (Exception e) {
+			logger.error("cookie转为对象失败", e);
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * 功能说明: cookie解密<br>
+	 * 系统版本: @version 1.0<br>
+	 * 开发人员: @author cgw<br>
+	 * 开发时间: 2016-10-17 上午10:13:01<br>
+	 */
+	public static String decryptionCookie(String toDecrypt) throws Exception {
+		String keyString = MD5.md5Encrypt(PropertiesUtils.get("gggw.cookie.encryptkey", "cuigaowei"));
+		String cookieDecryptStr = AESUtil.decrypt(toDecrypt, keyString);
+		return cookieDecryptStr;
 	}
 }
 
