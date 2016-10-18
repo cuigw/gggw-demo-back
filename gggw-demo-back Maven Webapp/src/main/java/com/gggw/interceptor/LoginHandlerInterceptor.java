@@ -4,8 +4,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
+
+import com.gggw.core.annotation.NoLogin;
 
 /**
  * 
@@ -23,17 +29,47 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 public class LoginHandlerInterceptor extends HandlerInterceptorAdapter{
 
 	/**
-	 * 在业务处理器处理请求之前被调用 如果返回false 从当前的拦截器往回执行所有拦截器的afterCompletion(),再退出拦截器链
-	 * 
-	 * 如果返回true 执行下一个拦截器,直到所有的拦截器都执行完毕 再执行被拦截的Controller 然后进入拦截器链,
-	 * 从最后一个拦截器往回执行所有的postHandle() 接着再从最后一个拦截器往回执行所有的afterCompletion()
+	 * 在业务处理器处理请求之前被调用 
+	 * 		1.返回false 退出拦截器链
+	 * 		2.返回true  执行下一个拦截器,直到所有的拦截器都执行完毕 再执行被拦截的Controller 然后进入拦截器链,
+	 * 		3.抛出异常
 	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		
-		/** 
-		 * 主要在这里加入验证cookie的逻辑。
+		
+		/**
+		 * 		登录拦截处理流程：
+		 * 				1.读取cookie（USER_SESSION）, 把cookie转为User类
+		 * 				2.request中设置属性  request.setAttribute(sessionName, user);
+		 * 				3.判断是否为静态资源，如果是不做拦截
+		 * 				4.如果有注解@NoLogin 不做拦截
+		 * 				5.其他登录逻辑
 		 */
+		
+		
+		
+		/** 静态资源请求 不做拦截*/
+		if (handler.getClass().equals(ResourceHttpRequestHandler.class)) {
+			return true;
+		}
+		
+		/**
+		 * 	1.不是  Controller、RestController不做拦截
+		 *  2.NoLogin类 不做拦截
+		 *  3.NoLogin方法不做拦截
+		 */
+		HandlerMethod method = (HandlerMethod)handler;
+		if (!method.getBeanType().isAnnotationPresent(Controller.class) && !method.getBeanType().isAnnotationPresent(RestController.class)) {
+			return true;
+		}
+		if (method.getBeanType().isAnnotationPresent(NoLogin.class)) {
+			return true;
+		}
+		if (method.getMethodAnnotation(NoLogin.class) != null) {
+			return true;
+		}
+		
 		
 		System.out.println("LoginHandlerInterceptor  preHandle()===========登录拦截");
 		
@@ -46,6 +82,12 @@ public class LoginHandlerInterceptor extends HandlerInterceptorAdapter{
 	 */
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+		
+		/**
+		 * 1.读取request   user = request.getAttribute(sessionName);
+		 * 2.把user写入cookie
+		 */
+		
 		System.out.println("LoginHandlerInterceptor  postHandle()===========");
 	}
 	

@@ -29,6 +29,7 @@ import com.gggw.util.FastJsonUtil;
 import com.gggw.util.PageData;
 import com.gggw.util.jedis.RedisClientUtil;
 import com.gggw.controller.base.BaseController;
+import com.gggw.core.annotation.NoLogin;
 import com.gggw.core.factory.impl.CounterServiceFactory;
 import com.gggw.entity.system.BaseSysUser;
 import com.gggw.service.counter.service.CounterService0002;
@@ -75,6 +76,7 @@ public class LoginController extends BaseController{
 	/**
 	 * 请求登录，验证用户
 	 */
+	@NoLogin
 	@RequestMapping(value="toLogin")
 	@ResponseBody
 	public ModelAndView toLogin(HttpServletRequest request, HttpServletResponse response)throws Exception{
