@@ -18,8 +18,8 @@ import org.slf4j.LoggerFactory;
 /**
  * 功能说明: 审核字段分割函数<br>
  * 系统版本: v1.0<br>
- * 开发人员: @author yejg<br>
- * 开发时间: 2012-03-28<br>
+ * 开发人员: @author cgw<br>
+ * 开发时间: 2016-10-18<br>
  */
 public class ParamUtil {
 
