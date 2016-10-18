@@ -43,6 +43,7 @@ public class CookieUtil {
 	
 	/**
 	 * 功能说明: 设置cookie<br>
+	 * 				response.addHeader("Set-Cookie", cookieContent.toString());的方式
 	 * 系统版本: @version 1.0<br>
 	 * 开发人员: @author cgw<br>
 	 * 开发时间: 2016-10-11 下午9:18:17<br>
@@ -56,7 +57,20 @@ public class CookieUtil {
 			/**cookie Id */
 			cookieContent.append(name);
 			cookieContent.append("=");
-			cookieContent.append(URLEncoder.encode(value, "UTF-8"));		//为了支持中文
+			/**
+			 * 		为了支持中文
+			 * 			js中使用2次encodeURIComponent进行编码
+			 * 				1.encodeURI() ： 对整个url进行编码
+			 * 				2.encodeURIComponent() ： 对url中的而一部分进行编码
+			 * 				3.因此，"; / ? : @ & = + $ , #"，这些在encodeURI()中不被编码的符号，
+			 * 					  在encodeURIComponent()中统统会被编码。至于具体的编码方法，两者是一样。
+			 *					  它对应的解码函数是decodeURIComponent()。
+			 *
+			 *			因为第一次编码，你的参数内容便不带有多字节字符了，成了纯粹的 Ascii 字符串。 [STR_ENC1] 
+			 *			再编一次后，提交，接收时容器自动解一次（容器自动解的这一次，不管是按 GBK 还是 UTF-8 还是 ISO-8859-1 都好，都能够正确的得到 [STR_ENC1]）
+			 *			然后，再在程序中实现一次 decodeURIComponent (Java中通常使用 java.net.URLDecoder(***, "UTF-8")) 就可以得到想提交的参数的原值。
+			 */
+			cookieContent.append(URLEncoder.encode(value, "UTF-8"));		
 			cookieContent.append(";");
 			/**cookie path */
 			cookieContent.append("Path=/;");
@@ -127,6 +141,7 @@ public class CookieUtil {
 			if (requestCookies != null) {
 				for (Cookie cookie : requestCookies) {
 					if (name.equals(cookie.getName())) {
+						//中文解码
 						return URLDecoder.decode(cookie.getValue(), "UTF-8");
 					}
 				}
