@@ -1,6 +1,7 @@
 package com.gggw.controller.system;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.UUID;
 
@@ -35,6 +36,7 @@ public class VerifyCodeAction {
 	@RequestMapping("imageCode.img")
 	public void verifyCode(HttpServletRequest request, HttpServletResponse response) {
 		String verifyCode="";
+		OutputStream os = null;
 		try {
 			// 生成随机验证码内容   
 			verifyCode= verifyCodeService.getRandString();
@@ -52,11 +54,19 @@ public class VerifyCodeAction {
 			verifyCodeService.saveValidateCode(verifyCode, sessionId);
 			BufferedImage bufferedImage = verifyCodeService.createVerifyCodeImage(verifyCode);
 			response.setContentType("image/png");  
-		    OutputStream os = response.getOutputStream();  
+		    os = response.getOutputStream();  
 		    ImageIO.write(bufferedImage, "png", os);
 		    os.close();
 		} catch (Exception e) {
 			logger.error("imageCode.img is error!", e);
+		} finally {
+			if (null != os) {
+				try {
+					os.close();
+				} catch (IOException e) {
+					logger.error("关闭文件流错误", e);					
+				}
+			}
 		}
 	}
 }
