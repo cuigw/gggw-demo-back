@@ -75,7 +75,7 @@ public class CacheManager {
 	//注册缓存调用者终端
 	private void registerCacheTerminal() {
 		Map<String, Boolean> clients = getRegisterClients();
-		if (StringUtils.contains(service_address, "xpe-context-config")) {
+		if (StringUtils.contains(service_address, "gggw-demo-back")) {
 			if (!Boolean.TRUE.equals(clients.get(service_address))) {
 				if (!clients.containsValue(Boolean.TRUE)) {
 					clients.put(service_address, true);
