@@ -9,21 +9,16 @@ import org.springframework.stereotype.Component;
  * @author   cgw 
  */
 @Component
-public class DBConfigCache extends PropertiesCache {
+public class InterfaceConfigCache extends PropertiesCache {
 
 	@Override
 	public String getId() {
-		return "db";
-	}
-
-	@Override
-	public int getOrder() {
-		return HIGHEST_PRECEDENCE;
+		return "interface";
 	}
 
 	@Override
 	public String[] getPropertiesNames() {
-		return new String[] {"/db/db.properties"};
+		return new String[] {"/interface/interface_config.properties"};
 	}
 }
 

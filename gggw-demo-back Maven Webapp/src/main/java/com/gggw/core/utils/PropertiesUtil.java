@@ -24,12 +24,14 @@ public class PropertiesUtil {
 	
 	private static Logger logger = LoggerFactory.getLogger(PropertiesUtil.class);
 	
-	private static  Properties prop;
+	private static  Properties prop = new Properties();;
 	
 	public static String[] pwdNameList = {"db.password"};  
 	
 	public static synchronized void clear() {
-		prop.clear();
+		if (null != prop) {
+			prop.clear();
+		}	
 	}
 	
 	public static synchronized void init() {
