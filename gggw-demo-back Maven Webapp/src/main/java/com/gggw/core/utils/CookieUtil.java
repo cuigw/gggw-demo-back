@@ -16,8 +16,6 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 
-import com.gggw.util.PropertiesUtils;
-
 
 /**
  * ClassName:CookieUtil <br/>
@@ -78,7 +76,7 @@ public class CookieUtil {
 			cookieContent.append("Path=/;");
 			/**cookie domain */
 			cookieContent.append("Domain=");
-			cookieContent.append(PropertiesUtils.get("gggw.cookie.domain"));
+			cookieContent.append(PropertiesUtil.get("gggw.cookie.domain"));
 			cookieContent.append(";");
 			/**cookie Max-Age */
 			if (cookies.containsKey(name)) {
@@ -116,7 +114,7 @@ public class CookieUtil {
 			 *      		  要么默认,要么填写域名  www.baidu.com 
 			 *              
 			 */
-			cookie.setDomain(PropertiesUtils.get("gggw.cookie.domain"));
+			cookie.setDomain(PropertiesUtil.get("gggw.cookie.domain"));
 			/**cookie Max-Age */
 			if (cookies.containsKey(name)) {
 				if (cookies.get(name) > 0 && isRemmerber) {
@@ -240,7 +238,7 @@ public class CookieUtil {
 	 * 开发时间: 2016-10-17 上午10:13:01<br>
 	 */
 	public static String encryptionCookie (String toEncrypt) throws Exception {
-		String keyString = MD5.md5Encrypt(PropertiesUtils.get("gggw.cookie.encryptkey", "cuigaowei"));
+		String keyString = MD5.md5Encrypt(PropertiesUtil.get("gggw.cookie.encryptkey", "cuigaowei"));
 		String cookieEncryptStr = AESUtil.encrypt(toEncrypt, keyString);
 		return cookieEncryptStr;
 	}
@@ -288,7 +286,7 @@ public class CookieUtil {
 	 * 开发时间: 2016-10-17 上午10:13:01<br>
 	 */
 	public static String decryptionCookie(String toDecrypt) throws Exception {
-		String keyString = MD5.md5Encrypt(PropertiesUtils.get("gggw.cookie.encryptkey", "cuigaowei"));
+		String keyString = MD5.md5Encrypt(PropertiesUtil.get("gggw.cookie.encryptkey", "cuigaowei"));
 		String cookieDecryptStr = AESUtil.decrypt(toDecrypt, keyString);
 		return cookieDecryptStr;
 	}

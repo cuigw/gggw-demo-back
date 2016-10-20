@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 
 import com.gggw.core.factory.ConfigedFactory;
 import com.gggw.core.factory.ICounterService;
+import com.gggw.core.utils.PropertiesUtil;
 import com.gggw.core.utils.SpringContext;
 import com.gggw.result.SisapResult;
 import com.gggw.service.counter.AbstractHsIfsService;
 import com.gggw.service.counter.AbstractKospService;
 import com.gggw.service.counter.AbstractLiveBosService;
 import com.gggw.service.counter.Counter;
-import com.gggw.util.PropertiesUtils;
 
 /**
  * 功能说明: 第三方服务工场(根据不同的第三方服务创建不同的处理类)<br>
@@ -93,7 +93,7 @@ public class CounterServiceFactory extends ConfigedFactory<ICounterService> {
 	}
 	
 	public ICounterService getBean(Class<? extends ICounterService> clazz) {
-		String configValue = PropertiesUtils.get(CONFIG_KEY);//"oosKospTellerCounter";
+		String configValue = PropertiesUtil.get(CONFIG_KEY);//"oosKospTellerCounter";
 		if (StringUtils.isBlank(configValue)) {
 			logger.info("当前配置项的{}为空,默认将加载对接恒生的实现", CONFIG_KEY);
 			configValue = CONFIG_KEY_HS;

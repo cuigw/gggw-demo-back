@@ -16,9 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-import com.gggw.core.utils.SpringContext;
+import com.gggw.core.utils.PropertiesUtil;
 import com.gggw.system.service.IImageCodeService;
-import com.gggw.util.PropertiesUtils;
 import com.gggw.util.jedis.RedisClientUtil;
 import com.jhlabs.image.RippleFilter;
 /**
@@ -148,7 +147,7 @@ public class ImageCodeServiceImpl implements IImageCodeService{
 		StringBuilder sb = new StringBuilder();
 		char[] randomNum = new char[] {};
 
-		String validateCodeType = PropertiesUtils.get("validateCode.type", "number");
+		String validateCodeType = PropertiesUtil.get("validateCode.type", "number");
 
 		if ("number".equalsIgnoreCase(validateCodeType)) {// 数字
 			randomNum = NUMBER_RANGE;

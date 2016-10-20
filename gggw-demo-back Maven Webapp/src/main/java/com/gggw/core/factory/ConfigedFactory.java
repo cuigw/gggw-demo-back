@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.gggw.core.utils.PropertiesUtil;
 import com.gggw.core.utils.SpringContext;
-import com.gggw.util.PropertiesUtils;
 
 /**
  * 功能说明: 配置工厂基类<br>
@@ -33,7 +33,7 @@ public abstract class ConfigedFactory<T> {
 	 * 开发时间: 2016-9-11 下午5:02:08<br>
 	 */
 	protected <T> T getBean() {
-		String config = PropertiesUtils.get(getConfigKey());
+		String config = PropertiesUtil.get(getConfigKey());
 		T bean = (T)springContext.getBean(getConfigMapping().get(config));
 		if (bean == null) {
 			logger.error("系统配置项[{}={}],但获取不到相应的实现类,请检查系统配置", getConfigKey(), config);
@@ -50,7 +50,7 @@ public abstract class ConfigedFactory<T> {
 	 * @return
 	 */
 	protected <T> T getBean(String defaultConfigValue) {
-		String config = PropertiesUtils.get(getConfigKey());
+		String config = PropertiesUtil.get(getConfigKey());
 		if (StringUtils.isBlank(config)) {
 			logger.info("当前系统配置的{}为空,默认赋值为[{}]", getConfigKey(), defaultConfigValue);
 			config = defaultConfigValue;
