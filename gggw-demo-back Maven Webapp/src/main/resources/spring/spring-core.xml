@@ -27,7 +27,7 @@
     	<property name="dataSource" ref="dataSource"></property>
  	</bean>
 	 
-	<bean id="propertyConfigurer" class="com.gggw.util.SystemPropertyBasedPlaceholderConfigurer">  
+	<bean id="propertyConfigurer" class="com.gggw.core.utils.SystemPropertyBasedPlaceholderConfigurer">  
         <property name="ignoreResourceNotFound" value="true" />
 		<property name="fileLocations">
 			<list>
