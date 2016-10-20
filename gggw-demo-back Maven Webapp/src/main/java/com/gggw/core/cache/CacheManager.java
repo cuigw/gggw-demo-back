@@ -24,13 +24,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.alibaba.fastjson.JSON;
+import com.gggw.core.utils.EnvironmentUtils;
+import com.gggw.core.utils.FastJsonUtil;
+import com.gggw.core.utils.HttpClientUtil;
+import com.gggw.core.utils.RequestUtil;
 import com.gggw.core.utils.SpringContext;
-import com.gggw.util.EnvironmentUtils;
-import com.gggw.util.FastJsonUtil;
-import com.gggw.util.HttpClientUtil;
+import com.gggw.core.utils.WebServerUtil;
 import com.gggw.util.PropertiesUtils;
-import com.gggw.util.RequestUtil;
-import com.gggw.util.WebServerUtil;
 import com.gggw.util.jedis.RedisClientUtil;
 
 /**

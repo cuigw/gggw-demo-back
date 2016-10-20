@@ -9,7 +9,7 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.gggw.util.EnvironmentUtils;
+import com.gggw.core.utils.EnvironmentUtils;
 
 /**
  * ClassName:PropertiesCache <br/>

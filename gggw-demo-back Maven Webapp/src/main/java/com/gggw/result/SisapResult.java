@@ -14,8 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONObject;
-import com.gggw.util.FastJsonUtil;
-import com.gggw.util.MapUtil;
+import com.gggw.core.utils.FastJsonUtil;
+import com.gggw.core.utils.MapUtil;
 
 /**
  * 功能说明: 中台服务结果集<br>

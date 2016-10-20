@@ -7,7 +7,7 @@
  *
 */
 
-package com.gggw.util;
+package com.gggw.core.utils;
 
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
@@ -19,6 +19,8 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.lang.StringUtils;
+
+import com.gggw.util.Logger;
 
 /**
  * ClassName:AESUtil <br/>

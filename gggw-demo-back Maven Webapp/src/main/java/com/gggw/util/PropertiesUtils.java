@@ -21,6 +21,9 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.gggw.core.utils.AESUtil;
+import com.gggw.core.utils.EnvironmentUtils;
+
 /**
  * ClassName:PropertiesUtils <br/>
  * Function: 配置文件读取. <br/>
