@@ -15,8 +15,8 @@ import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.gggw.core.utils.EnvironmentUtils;
 import com.gggw.util.DateUtil;
-import com.gggw.util.EnvironmentUtils;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPoolConfig;

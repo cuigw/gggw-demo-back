@@ -1,4 +1,4 @@
-package com.gggw.util;
+package com.gggw.core.utils;
 
 import java.io.IOException;
 import java.util.ArrayList;

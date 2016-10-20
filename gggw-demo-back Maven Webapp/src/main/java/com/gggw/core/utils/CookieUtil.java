@@ -1,4 +1,4 @@
-package com.gggw.util;
+package com.gggw.core.utils;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
+
+import com.gggw.util.PropertiesUtils;
 
 
 /**

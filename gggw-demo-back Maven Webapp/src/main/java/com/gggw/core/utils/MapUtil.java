@@ -1,4 +1,4 @@
-package com.gggw.util;
+package com.gggw.core.utils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -24,13 +24,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.gggw.core.annotation.Alias;
 import com.gggw.core.annotation.DateFormat;
 import com.gggw.core.annotation.NoSerialize;
+import com.gggw.util.DateUtil;
 
 
 /**
  * 功能说明: Map工具类<br>
  * 系统版本: v1.0<br>
- * 开发人员: @author tanjk@hundsun.com<br>
- * 开发时间: 2012-5-22<br>
+ * 开发人员: @author cgw<br>
+ * 开发时间: 2016-5-22<br>
  */
 public class MapUtil extends MapUtils {
 

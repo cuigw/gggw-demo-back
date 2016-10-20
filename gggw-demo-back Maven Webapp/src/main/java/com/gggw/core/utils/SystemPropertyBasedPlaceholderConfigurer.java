@@ -7,7 +7,7 @@
  *
 */
 
-package com.gggw.util;
+package com.gggw.core.utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +18,8 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+
+import com.gggw.util.Logger;
 
 /**
  * ClassName:SystemPropertyBasedPlaceholderConfigurer <br/>
