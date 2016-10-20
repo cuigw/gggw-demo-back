@@ -27,10 +27,10 @@ import com.alibaba.fastjson.JSON;
 import com.gggw.core.utils.EnvironmentUtils;
 import com.gggw.core.utils.FastJsonUtil;
 import com.gggw.core.utils.HttpClientUtil;
+import com.gggw.core.utils.PropertiesUtil;
 import com.gggw.core.utils.RequestUtil;
 import com.gggw.core.utils.SpringContext;
 import com.gggw.core.utils.WebServerUtil;
-import com.gggw.util.PropertiesUtils;
 import com.gggw.util.jedis.RedisClientUtil;
 
 /**
@@ -226,7 +226,7 @@ public class CacheManager {
 					}
 				}
 				// 更新Properties文件，清除老配置重新加载
-				PropertiesUtils.clear();
+				PropertiesUtil.clear();
 			} else {
 				if(cache != null) {
 					cache.refresh();
