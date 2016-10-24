@@ -23,7 +23,7 @@ import com.gggw.util.Logger;
 
 /**
  * ClassName:SystemPropertyBasedPlaceholderConfigurer <br/>
- * Function: TODO ADD FUNCTION. <br/>
+ * Function: 读取配置文件，给占位符赋值. <br/>
  * Reason:	 TODO ADD REASON. <br/>
  * Date:     2016-6-25 下午1:11:00 <br/>
  * @author   cgw

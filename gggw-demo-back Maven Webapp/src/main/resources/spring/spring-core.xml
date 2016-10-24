@@ -23,29 +23,47 @@
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 	
-	<bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">   
-    	<property name="dataSource" ref="dataSource"></property>
- 	</bean>
-	 
+	<bean id="springContext" class="com.gggw.core.utils.SpringContext"></bean>
+	
+	
+	<!-- 
+		为了代替手动使用SqlSessionDaoSupport或SqlSessionTemplate，
+		MyBatis-Spring提供了一个动态代理的实现，即MapperFactoryBean，
+		从而直接注入数据映射器到Service层bean中，MapperFactoryBean负责处理SqlSession的创建和关闭，
+		使用了Spring事务后，事务完成时，session将会提交或者回滚。
+	
+		1.创建jdbc数据源 
+		<bean id="dataSource" class="com.cairh.xpe.context.jdbc.DynaCachedDataSource" />
+
+		2.创建SqlSessionFactory，同时指定数据源
+		<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+			<property name="dataSource" ref="dataSource" />
+		</bean>
+	
+		3.bean注入
+		   注意,没有必要去指定SqlSessionFactory或SqlSessionTemplate, 
+		    因为MapperScannerConfigurer将会创建 MapperFactoryBean，之后自动装配。
+		    但是，如果你使 用了一个以上的DataSource，那 么自动装配可能会失效。
+		    这种情况下,你可以使用 sqlSessionFactoryBeanName或sqlSessionTemplateBeanName 
+		    属性来设置正确的 bean名称来使用
+		<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+			<property name="basePackage" value="com.cairh.xpe.**.dao"/>
+			<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		</bean>
+	 -->
+	
+	<!-- ================ sql TransactionManager start  ================ -->	 
+	<!-- 读取配置文件 -->
 	<bean id="propertyConfigurer" class="com.gggw.core.utils.SystemPropertyBasedPlaceholderConfigurer">  
         <property name="ignoreResourceNotFound" value="true" />
+        <!--  通过文件读取 -->
 		<property name="fileLocations">
 			<list>
 				<value>/db/db.properties</value>
 			</list>
 		</property>
 	</bean>  
-	
-	<bean id="PropertiesUtils" class="com.gggw.util.PropertiesUtils">
-		<property name="fileList">
-			<list>
-				<value>/interface/interface_config.properties</value>
-			</list>
-		</property>
-	</bean>
-	
-	<bean id="springContext" class="com.gggw.core.utils.SpringContext"></bean>
-	
+		
 	<!-- 阿里 druid数据库连接池 -->
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">  
          <!-- 数据库基本信息配置 -->
@@ -79,6 +97,24 @@
          <property name="logAbandoned" value="${db.logAbandoned}" />
 	</bean>  
 	
+	<!-- 事务管理 -->
+	<bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">   
+    	<property name="dataSource" ref="dataSource"></property>
+ 	</bean>
+ 	
+ 	<!-- 配置mybatis -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    	<property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"></property>
+        <!-- mapper扫描 -->
+        <property name="mapperLocations" value="classpath:mybatis/*/*.xml"></property>
+    </bean>
+    
+    <!-- 存疑 -->
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory" />
+	</bean>
+	
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="delete*" propagation="REQUIRED" read-only="false" 
@@ -100,18 +136,10 @@
 		<aop:advisor pointcut-ref="pc" advice-ref="txAdvice" />
 	</aop:config>
 	
-	<!-- 配置mybatis -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-    	<property name="dataSource" ref="dataSource" />
-        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"></property>
-        <!-- mapper扫描 -->
-        <property name="mapperLocations" value="classpath:mybatis/*/*.xml"></property>
-    </bean>
-    
-    <!-- 存疑 -->
-    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg ref="sqlSessionFactory" />
-	</bean>
+	
+	<!-- ================ sql TransactionManager end ================ -->
+	
+	
 	
 	<!-- ================ Shiro start ================ -->
 	  	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
@@ -147,5 +175,12 @@
 		</bean>
 	<!-- ================ Shiro end ================ -->
 	
-   
+	<!--  文件注入的方式
+   	<bean id="PropertiesUtils" class="com.gggw.util.PropertiesUtils">
+		<property name="fileList">
+			<list>
+				<value>/interface/interface_config.properties</value>
+			</list>
+		</property>
+	</bean>-->
 </beans>
