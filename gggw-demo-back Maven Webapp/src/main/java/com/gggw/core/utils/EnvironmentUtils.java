@@ -46,7 +46,7 @@ public class EnvironmentUtils {
 				path = "E:"+File.separator+"runtime_config";
 			}
 			else {
-				path = "/home/config/runtime_config";
+				path = "/usr/cgw/config/runtime_config";
 			}
 		}
 		return path;
