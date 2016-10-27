@@ -25,6 +25,8 @@
 	
 	<bean id="springContext" class="com.gggw.core.utils.SpringContext"></bean>
 	
+	<bean id="securityFilter" class="com.gggw.filter.SecurityFilter" />
+	
 	
 	<!-- 
 		为了代替手动使用SqlSessionDaoSupport或SqlSessionTemplate，
