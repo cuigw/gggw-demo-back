@@ -184,6 +184,19 @@ public class LoginController extends BaseController{
 		return FastJsonUtil.toJSONString(map);
 	}
 	
+	
+	/**
+	 * 请求登录，验证用户
+	 */
+	@NoLogin
+	@RequestMapping(value="toHome")
+	@ResponseBody
+	public ModelAndView toHome(HttpServletRequest request, HttpServletResponse response)throws Exception{
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("ui/back/included");
+		return modelAndView;
+	}
+
 	//=========================================  tool Functions  start  ===========================================//
 	
 	/**       
