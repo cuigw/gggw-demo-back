@@ -312,8 +312,7 @@
 					usrPwd : usrPwd
 				};
 				$.getJSON(url, params, function(data) {
-					alert(data.USER_PWD);
-				
+					window.location.href = '${contextPath }/toHome';				
 				});
 			
 			});

@@ -4,9 +4,7 @@
 
 				
    	    <div class="sidebar" id="sidebar">
-			<script type="text/javascript">
-				try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
-			</script>
+
 			
 			<!-- 左上菜单栏 -->
 			<div class="sidebar-shortcuts" id="sidebar-shortcuts">
