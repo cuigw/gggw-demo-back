@@ -81,7 +81,8 @@ public class LoginController extends BaseController{
 	@ResponseBody
 	public ModelAndView toLogin(HttpServletRequest request, HttpServletResponse response)throws Exception{
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("ui/back/login");
+		//modelAndView.setViewName("ui/back/login");
+		modelAndView.setViewName("ui/backend/index");
 		return modelAndView;
 	}
 

@@ -17,6 +17,7 @@
 	<!-- 对静态资源文件的访问  restful-->     
 	<mvc:resources mapping="/admin/**" location="/,/admin/" />
 	<mvc:resources mapping="/static/**" location="/,/static/" />
+	<mvc:resources mapping="/vendor/**" location="/,/vendor/" />
 	<mvc:resources mapping="/plugins/**" location="/,/plugins/" />
 	<mvc:resources mapping="/uploadFiles/**" location="/,/uploadFiles/" /> 
 
