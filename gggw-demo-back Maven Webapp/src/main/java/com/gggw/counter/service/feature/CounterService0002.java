@@ -1,4 +1,4 @@
-package com.gggw.service.counter.service;
+package com.gggw.counter.service.feature;
 
 import com.gggw.core.factory.ICounterService;
 

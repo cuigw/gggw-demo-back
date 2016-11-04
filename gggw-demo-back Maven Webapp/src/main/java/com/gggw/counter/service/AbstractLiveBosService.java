@@ -1,4 +1,4 @@
-package com.gggw.service.counter;
+package com.gggw.counter.service;
 
 /**
  * 功能说明: 抽象类，顶点的接口实现类需要继承此类<br>

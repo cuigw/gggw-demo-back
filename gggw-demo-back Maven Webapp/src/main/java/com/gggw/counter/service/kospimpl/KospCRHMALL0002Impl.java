@@ -1,12 +1,12 @@
-package com.gggw.service.counter.kospimpl;
+package com.gggw.counter.service.kospimpl;
 
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.gggw.counter.service.AbstractKospService;
+import com.gggw.counter.service.feature.CounterService0002;
 import com.gggw.result.SisapResult;
-import com.gggw.service.counter.AbstractKospService;
-import com.gggw.service.counter.service.CounterService0002;
 
 /**
  * ClassName:KospCRHMALL0002Impl <br/>
