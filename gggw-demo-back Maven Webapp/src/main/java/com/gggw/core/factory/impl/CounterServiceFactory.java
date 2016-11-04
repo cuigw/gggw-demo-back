@@ -13,11 +13,11 @@ import com.gggw.core.factory.ConfigedFactory;
 import com.gggw.core.factory.ICounterService;
 import com.gggw.core.utils.PropertiesUtil;
 import com.gggw.core.utils.SpringContext;
+import com.gggw.counter.service.AbstractHsIfsService;
+import com.gggw.counter.service.AbstractKospService;
+import com.gggw.counter.service.AbstractLiveBosService;
+import com.gggw.counter.service.Counter;
 import com.gggw.result.SisapResult;
-import com.gggw.service.counter.AbstractHsIfsService;
-import com.gggw.service.counter.AbstractKospService;
-import com.gggw.service.counter.AbstractLiveBosService;
-import com.gggw.service.counter.Counter;
 
 /**
  * 功能说明: 第三方服务工场(根据不同的第三方服务创建不同的处理类)<br>

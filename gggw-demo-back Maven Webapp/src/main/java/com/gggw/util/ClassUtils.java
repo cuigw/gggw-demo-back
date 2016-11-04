@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-import com.gggw.service.counter.Counter;
+import com.gggw.counter.service.Counter;
 
 /**
  * ClassName:ClassUtils <br/>
