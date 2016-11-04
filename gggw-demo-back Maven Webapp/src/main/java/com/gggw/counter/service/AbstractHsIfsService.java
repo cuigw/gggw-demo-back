@@ -1,4 +1,4 @@
-package com.gggw.service.counter;
+package com.gggw.counter.service;
 
 
 /**
