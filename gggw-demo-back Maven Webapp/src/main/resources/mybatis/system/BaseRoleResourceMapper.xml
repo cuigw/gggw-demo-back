@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BaseRoleResourceMapper" >
+  <resultMap id="BaseRoleResourceResultMap" type="BaseRoleResource" >
+    <id column="ROLE_RESOURCE_ID" property="roleResourceId" jdbcType="INTEGER" />
+    <result column="ROLE_ID" property="roleId" jdbcType="INTEGER" />
+    <result column="RESOURCE_ID" property="resourceId" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from BASE_ROLE_RESOURCE
+    where ROLE_RESOURCE_ID = #{roleResourceId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="BaseRoleResource" >
+    insert into BASE_ROLE_RESOURCE (ROLE_RESOURCE_ID, ROLE_ID, RESOURCE_ID
+      )
+    values (#{roleResourceId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{resourceId,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="BaseRoleResource" >
+    update BASE_ROLE_RESOURCE
+    set ROLE_ID = #{roleId,jdbcType=INTEGER},
+      RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
+    where ROLE_RESOURCE_ID = #{roleResourceId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseRoleResourceResultMap" parameterType="java.lang.Integer" >
+    select ROLE_RESOURCE_ID, ROLE_ID, RESOURCE_ID
+    from BASE_ROLE_RESOURCE
+    where ROLE_RESOURCE_ID = #{roleResourceId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseRoleResourceResultMap" >
+    select ROLE_RESOURCE_ID, ROLE_ID, RESOURCE_ID
+    from BASE_ROLE_RESOURCE
+  </select>
+</mapper>

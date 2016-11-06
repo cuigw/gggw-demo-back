@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BaseDictionaryMapper" >
+  <resultMap id="BaseDictionaryResultMap" type="BaseDictionary" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="DICT_ENTRY" property="dictEntry" jdbcType="INTEGER" />
+    <result column="SUB_ENTRY" property="subEntry" jdbcType="VARCHAR" />
+    <result column="DICT_PROMPT" property="dictPrompt" jdbcType="VARCHAR" />
+    <result column="ORDER_NUM" property="orderNum" jdbcType="INTEGER" />
+    <result column="MEMO" property="memo" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="CREATE_BY" property="createBy" jdbcType="INTEGER" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_BY" property="updateBy" jdbcType="INTEGER" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from BASE_DICTIONARY
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="BaseDictionary" >
+    insert into BASE_DICTIONARY (ID, DICT_ENTRY, SUB_ENTRY, 
+      DICT_PROMPT, ORDER_NUM, MEMO, 
+      STATUS, CREATE_BY, CREATE_TIME, 
+      UPDATE_BY, UPDATE_TIME)
+    values (#{id,jdbcType=INTEGER}, #{dictEntry,jdbcType=INTEGER}, #{subEntry,jdbcType=VARCHAR}, 
+      #{dictPrompt,jdbcType=VARCHAR}, #{orderNum,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{createBy,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="BaseDictionary" >
+    update BASE_DICTIONARY
+    set DICT_ENTRY = #{dictEntry,jdbcType=INTEGER},
+      SUB_ENTRY = #{subEntry,jdbcType=VARCHAR},
+      DICT_PROMPT = #{dictPrompt,jdbcType=VARCHAR},
+      ORDER_NUM = #{orderNum,jdbcType=INTEGER},
+      MEMO = #{memo,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=INTEGER},
+      CREATE_BY = #{createBy,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_BY = #{updateBy,jdbcType=INTEGER},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseDictionaryResultMap" parameterType="java.lang.Integer" >
+    select ID, DICT_ENTRY, SUB_ENTRY, DICT_PROMPT, ORDER_NUM, MEMO, STATUS, CREATE_BY, 
+    CREATE_TIME, UPDATE_BY, UPDATE_TIME
+    from BASE_DICTIONARY
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseDictionaryResultMap" >
+    select ID, DICT_ENTRY, SUB_ENTRY, DICT_PROMPT, ORDER_NUM, MEMO, STATUS, CREATE_BY, 
+    CREATE_TIME, UPDATE_BY, UPDATE_TIME
+    from BASE_DICTIONARY
+  </select>
+</mapper>

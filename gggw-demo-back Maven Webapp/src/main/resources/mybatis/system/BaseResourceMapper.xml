@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BaseResourceMapper" >
+  <resultMap id="BaseResourceResultMap" type="BaseResource" >
+    <id column="RESOURCE_ID" property="resourceId" jdbcType="INTEGER" />
+    <result column="RESOURCE_CODE" property="resourceCode" jdbcType="VARCHAR" />
+    <result column="RESOURCE_NAME" property="resourceName" jdbcType="VARCHAR" />
+    <result column="RESOURCE_TYPE" property="resourceType" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="URL" property="url" jdbcType="VARCHAR" />
+    <result column="URL_INNER" property="urlInner" jdbcType="VARCHAR" />
+    <result column="PARENT_ID" property="parentId" jdbcType="INTEGER" />
+    <result column="ORDER_NUM" property="orderNum" jdbcType="INTEGER" />
+    <result column="CLASS_STYLE" property="classStyle" jdbcType="VARCHAR" />
+    <result column="MEMO" property="memo" jdbcType="VARCHAR" />
+    <result column="IS_ACTIVE" property="isActive" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from BASE_RESOURCE
+    where RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="BaseResource" >
+    insert into BASE_RESOURCE (RESOURCE_ID, RESOURCE_CODE, RESOURCE_NAME, 
+      RESOURCE_TYPE, DESCRIPTION, URL, 
+      URL_INNER, PARENT_ID, ORDER_NUM, 
+      CLASS_STYLE, MEMO, IS_ACTIVE
+      )
+    values (#{resourceId,jdbcType=INTEGER}, #{resourceCode,jdbcType=VARCHAR}, #{resourceName,jdbcType=VARCHAR}, 
+      #{resourceType,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{urlInner,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, #{orderNum,jdbcType=INTEGER}, 
+      #{classStyle,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, #{isActive,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="BaseResource" >
+    update BASE_RESOURCE
+    set RESOURCE_CODE = #{resourceCode,jdbcType=VARCHAR},
+      RESOURCE_NAME = #{resourceName,jdbcType=VARCHAR},
+      RESOURCE_TYPE = #{resourceType,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      URL = #{url,jdbcType=VARCHAR},
+      URL_INNER = #{urlInner,jdbcType=VARCHAR},
+      PARENT_ID = #{parentId,jdbcType=INTEGER},
+      ORDER_NUM = #{orderNum,jdbcType=INTEGER},
+      CLASS_STYLE = #{classStyle,jdbcType=VARCHAR},
+      MEMO = #{memo,jdbcType=VARCHAR},
+      IS_ACTIVE = #{isActive,jdbcType=VARCHAR}
+    where RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResourceResultMap" parameterType="java.lang.Integer" >
+    select RESOURCE_ID, RESOURCE_CODE, RESOURCE_NAME, RESOURCE_TYPE, DESCRIPTION, URL, 
+    URL_INNER, PARENT_ID, ORDER_NUM, CLASS_STYLE, MEMO, IS_ACTIVE
+    from BASE_RESOURCE
+    where RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResourceResultMap" >
+    select RESOURCE_ID, RESOURCE_CODE, RESOURCE_NAME, RESOURCE_TYPE, DESCRIPTION, URL, 
+    URL_INNER, PARENT_ID, ORDER_NUM, CLASS_STYLE, MEMO, IS_ACTIVE
+    from BASE_RESOURCE
+  </select>
+</mapper>
