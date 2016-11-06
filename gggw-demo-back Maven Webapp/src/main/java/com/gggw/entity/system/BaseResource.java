@@ -1,5 +1,7 @@
 package com.gggw.entity.system;
 
+import java.util.List;
+
 public class BaseResource {
     private Integer resourceId;
 
@@ -24,6 +26,16 @@ public class BaseResource {
     private String memo;
 
     private String isActive;
+
+    private List<BaseResource> kidResources;
+
+    public List<BaseResource> getKidResources() {
+        return kidResources;
+    }
+
+    public void setKidResources(List<BaseResource> kidResources) {
+        this.kidResources = kidResources;
+    }
 
     public Integer getResourceId() {
         return resourceId;

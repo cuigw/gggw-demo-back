@@ -57,4 +57,10 @@
     URL_INNER, PARENT_ID, ORDER_NUM, CLASS_STYLE, MEMO, IS_ACTIVE
     from BASE_RESOURCE
   </select>
+
+    <select id="getKidResources" resultMap="BaseResourceResultMap" >
+        select RESOURCE_ID, RESOURCE_CODE, RESOURCE_NAME, RESOURCE_TYPE, DESCRIPTION, URL,
+        URL_INNER, PARENT_ID, ORDER_NUM, CLASS_STYLE, MEMO, IS_ACTIVE
+        from BASE_RESOURCE where PARENT_ID = #{parentId} order by ORDER_NUM
+    </select>
 </mapper>

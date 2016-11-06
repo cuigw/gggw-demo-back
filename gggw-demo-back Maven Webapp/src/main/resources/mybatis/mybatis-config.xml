@@ -20,12 +20,12 @@
 		<typeAlias type="com.gggw.entity.Page" alias="Page"/>
 	</typeAliases>
 	
-
+	<!--
 	<plugins>
 		<plugin interceptor="com.gggw.plugin.PagePlugin">
 			<property name="dialect" value="mysql"/>
 			<property name="pageSqlId" value=".*listPage.*"/>
 		</plugin>
-	</plugins>
+	</plugins>-->
 	
 </configuration>
