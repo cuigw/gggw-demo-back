@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.gggw.entity.system.BaseResource;
 import com.gggw.service.system.SysResourceService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -87,7 +88,9 @@ public class LoginController extends BaseController{
 	public ModelAndView toLogin(HttpServletRequest request, HttpServletResponse response)throws Exception{
 		ModelAndView modelAndView = new ModelAndView();
 		//modelAndView.setViewName("ui/back/login");
-		modelAndView.setViewName("ui/backend/index");
+        modelAndView.addObject("menuHtml", getMenuList());
+        System.out.println(getMenuList());
+        modelAndView.setViewName("ui/backend/index");
 		return modelAndView;
 	}
 
@@ -208,17 +211,44 @@ public class LoginController extends BaseController{
 	@NoLogin
 	@RequestMapping(value="getMenuList")
 	public Object getMenuList(){
+        StringBuilder menuHtml = new StringBuilder();
 		try {
-			List<BaseResource> allMenu = sysResourceService.getAllResource();
-			for (BaseResource menu : allMenu) {
-
-			}
-			System.out.println(allMenu);
+			List<BaseResource> menus = sysResourceService.getKidResources(0);
+            menuHtml.append(getChildMenuHtml(menus));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "";
+		return menuHtml.toString();
 	}
+
+	public String build (BaseResource menu, List<BaseResource> childMenus) throws Exception{
+        StringBuilder childHtml = new StringBuilder();
+        if (childMenus.size() > 0) {
+            childHtml.append("<ul class=\"nav " + menu.getClassStyle() + "\">");
+            childHtml.append(getChildMenuHtml(childMenus));
+            childHtml.append("</ul>");
+        }
+        return childHtml.toString();
+    }
+
+    public String getChildMenuHtml(List<BaseResource> menus) throws Exception{
+        StringBuilder menuHtml = new StringBuilder();
+        for (BaseResource menu : menus) {
+            List<BaseResource> childMenus = sysResourceService.getKidResources(menu.getResourceId());
+            if(childMenus.size() > 0 ){
+                menuHtml.append("<li><a href=\"#\"><i class=\"fa " + menu.getIcon() + " fa-fw\"></i> " + menu.getResourceName() + "<span class=\"fa arrow\"></span></a>");
+                menuHtml.append(build(menu, childMenus));
+                menuHtml.append("</li>");
+            } else {
+                String url = "#";
+                if (StringUtils.isNotBlank(menu.getUrlInner())) {
+                    url = menu.getUrlInner();
+                }
+                menuHtml.append("<li><a href=\""+ url +"\"><i class=\"fa " + menu.getIcon() + " fa-fw\"></i> " + menu.getResourceName() + "</a></li>");
+            }
+        }
+        return menuHtml.toString();
+    }
 	//=========================================  tool Functions  start  ===========================================//
 	
 	/**       

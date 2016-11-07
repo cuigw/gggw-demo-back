@@ -23,6 +23,8 @@ public class BaseResource {
 
     private String classStyle;
 
+    private String icon;
+
     private String memo;
 
     private String isActive;
@@ -115,6 +117,14 @@ public class BaseResource {
 
     public void setClassStyle(String classStyle) {
         this.classStyle = classStyle == null ? null : classStyle.trim();
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public String getMemo() {

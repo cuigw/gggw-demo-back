@@ -12,6 +12,7 @@
     <result column="PARENT_ID" property="parentId" jdbcType="INTEGER" />
     <result column="ORDER_NUM" property="orderNum" jdbcType="INTEGER" />
     <result column="CLASS_STYLE" property="classStyle" jdbcType="VARCHAR" />
+      <result column="ICON" property="icon" jdbcType="VARCHAR" />
     <result column="MEMO" property="memo" jdbcType="VARCHAR" />
     <result column="IS_ACTIVE" property="isActive" jdbcType="VARCHAR" />
   </resultMap>
@@ -23,7 +24,7 @@
     insert into BASE_RESOURCE (RESOURCE_ID, RESOURCE_CODE, RESOURCE_NAME, 
       RESOURCE_TYPE, DESCRIPTION, URL, 
       URL_INNER, PARENT_ID, ORDER_NUM, 
-      CLASS_STYLE, MEMO, IS_ACTIVE
+      CLASS_STYLE,ICON, MEMO, IS_ACTIVE
       )
     values (#{resourceId,jdbcType=INTEGER}, #{resourceCode,jdbcType=VARCHAR}, #{resourceName,jdbcType=VARCHAR}, 
       #{resourceType,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
@@ -42,25 +43,26 @@
       PARENT_ID = #{parentId,jdbcType=INTEGER},
       ORDER_NUM = #{orderNum,jdbcType=INTEGER},
       CLASS_STYLE = #{classStyle,jdbcType=VARCHAR},
+      ICON = #{icon,jdbcType=VARCHAR},
       MEMO = #{memo,jdbcType=VARCHAR},
       IS_ACTIVE = #{isActive,jdbcType=VARCHAR}
     where RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResourceResultMap" parameterType="java.lang.Integer" >
     select RESOURCE_ID, RESOURCE_CODE, RESOURCE_NAME, RESOURCE_TYPE, DESCRIPTION, URL, 
-    URL_INNER, PARENT_ID, ORDER_NUM, CLASS_STYLE, MEMO, IS_ACTIVE
+    URL_INNER, PARENT_ID, ORDER_NUM, CLASS_STYLE, ICON, MEMO, IS_ACTIVE
     from BASE_RESOURCE
     where RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResourceResultMap" >
     select RESOURCE_ID, RESOURCE_CODE, RESOURCE_NAME, RESOURCE_TYPE, DESCRIPTION, URL, 
-    URL_INNER, PARENT_ID, ORDER_NUM, CLASS_STYLE, MEMO, IS_ACTIVE
+    URL_INNER, PARENT_ID, ORDER_NUM, CLASS_STYLE, ICON, MEMO, IS_ACTIVE
     from BASE_RESOURCE
   </select>
 
     <select id="getKidResources" resultMap="BaseResourceResultMap" >
         select RESOURCE_ID, RESOURCE_CODE, RESOURCE_NAME, RESOURCE_TYPE, DESCRIPTION, URL,
-        URL_INNER, PARENT_ID, ORDER_NUM, CLASS_STYLE, MEMO, IS_ACTIVE
-        from BASE_RESOURCE where PARENT_ID = #{parentId} order by ORDER_NUM
+        URL_INNER, PARENT_ID, ORDER_NUM, CLASS_STYLE, ICON, MEMO, IS_ACTIVE
+        from BASE_RESOURCE where PARENT_ID = #{parentId} and RESOURCE_TYPE = 'M' order by ORDER_NUM DESC
     </select>
 </mapper>
