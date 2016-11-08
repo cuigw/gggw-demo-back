@@ -11,12 +11,16 @@
 
 	<typeAliases>
 		<typeAlias type="com.gggw.entity.system.BaseSysUser" alias="BaseSysUser"/>
+		<typeAlias type="com.gggw.entity.system.BaseRole" alias="BaseRole"/>
+		<typeAlias type="com.gggw.entity.system.BaseRoleResource" alias="BaseRoleResource"/>
+		<typeAlias type="com.gggw.entity.system.BaseResource" alias="BaseResource"/>
+		<typeAlias type="com.gggw.entity.system.BaseDictionary" alias="BaseDictionary"/>
 		<typeAlias type="com.gggw.util.PageData" alias="pd"/>
 		<!-- 分页 -->
 		<typeAlias type="com.gggw.entity.Page" alias="Page"/>
 	</typeAliases>
 	
-	<!--  
+	<!--
 	<plugins>
 		<plugin interceptor="com.gggw.plugin.PagePlugin">
 			<property name="dialect" value="mysql"/>
