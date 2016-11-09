@@ -47,7 +47,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">A wanderer isn't always lost</a>
+                <a class="navbar-brand" href="${contextPath }/toLogin">A wanderer isn't always lost</a>
             </div>
             <!-- /.navbar-header -->
             
@@ -604,4 +604,28 @@
     </div>
     <!-- /#wrapper -->
   </body>
+  <script>
+  		//使用ajax的方式跳转  避免重复刷新菜单和顶部栏
+  		function toPage(obj, url, params) {
+  			//如果指向地址为空
+  		    if (!url) {
+  		    	return;
+  		    }
+  			url = "${contextPath }" + url;
+  			var title = obj.innerText;
+  			$.ajax({
+  				type : "GET",
+  				url : url+"?rnd=" + new Date().getTime(),
+  				dataType : "text",
+  				data : params,
+         		success : function(data) {
+         			//修改title
+         			$(document).attr("title", title);
+         			//修改地址
+         			history.pushState(null, title ,url);
+         			$("#page-wrapper").html(data);
+         		}
+         	});
+  		}
+  </script>
 </html>
