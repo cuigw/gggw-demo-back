@@ -11,6 +11,7 @@ package com.gggw.service.system;
 
 import javax.annotation.Resource;
 
+import com.gggw.entity.system.BaseSysUser;
 import org.springframework.stereotype.Service;
 
 import com.gggw.util.PageData;
@@ -37,6 +38,13 @@ public class SysUserService {
 	 */
 	public PageData findByUserNo(PageData pd)throws Exception{
 		return (PageData)dao.findForObject("BaseSysUserMapper.findByUserNo", pd);
+	}
+
+	/**
+	 * 新增用户
+	 */
+	public void addUser(BaseSysUser baseSysUser) throws Exception{
+		dao.findForObject("BaseSysUserMapper.insert", baseSysUser);
 	}
 }
 
