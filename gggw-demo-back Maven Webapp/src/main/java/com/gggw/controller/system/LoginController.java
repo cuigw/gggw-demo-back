@@ -240,11 +240,11 @@ public class LoginController extends BaseController{
                 menuHtml.append(build(menu, childMenus));
                 menuHtml.append("</li>");
             } else {
-                String url = "#";
+                String url = "";
                 if (StringUtils.isNotBlank(menu.getUrlInner())) {
                     url = menu.getUrlInner();
                 }
-                menuHtml.append("<li><a href=\""+ url +"\"><i class=\"fa " + menu.getIcon() + " fa-fw\"></i> " + menu.getResourceName() + "</a></li>");
+                menuHtml.append("<li><a onclick=\"toPage(this, '"+ url +"')\"><i class=\"fa " + menu.getIcon() + " fa-fw\"></i> " + menu.getResourceName() + "</a></li>");
             }
         }
         return menuHtml.toString();
