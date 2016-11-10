@@ -17,7 +17,7 @@
 		<div class="row">
             <div class="col-lg-12">
                 <h3 class="page-header text-primary">用户管理
-                	<button type="button" class="btn btn-outline btn-primary btn-sm" style="float:right;" onclick="toPage(this, '/toUserEdit', '0')" >添加用户</button>
+                	<button type="button" class="btn btn-outline btn-primary btn-sm" style="float:right;" onclick="toPage(this, '/toUserEdit', { operatType: '0' })" >添加用户</button>
                 </h3>
             </div>
             <!-- /.col-lg-12 -->

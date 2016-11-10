@@ -36,8 +36,8 @@ public class SysUserService {
 	/**
 	 * findByUserNo:(通过登录的用户名查询用户). <br/>
 	 */
-	public PageData findByUserNo(PageData pd)throws Exception{
-		return (PageData)dao.findForObject("BaseSysUserMapper.findByUserNo", pd);
+	public BaseSysUser findByUserNo(BaseSysUser user)throws Exception{
+		return (BaseSysUser)dao.findForObject("BaseSysUserMapper.findByUserNo", user);
 	}
 
 	/**
