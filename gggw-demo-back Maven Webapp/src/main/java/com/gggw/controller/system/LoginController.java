@@ -103,7 +103,7 @@ public class LoginController extends BaseController{
 		Map<String,String> map = new HashMap<String,String>();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		pd = sysUserService.findByUserNo(pd);
+		//pd = sysUserService.findByUserNo(pd);
 		//System.out.println(getRequestPostStr(request));
 		map.put("error_no", "0");
 		counterFactory.excute("cccgw", null, CounterService0002.class);

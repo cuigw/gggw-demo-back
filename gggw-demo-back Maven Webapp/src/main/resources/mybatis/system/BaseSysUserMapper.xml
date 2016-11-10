@@ -6,7 +6,7 @@
     <result column="USER_NO" jdbcType="VARCHAR" property="userNo" />
     <result column="USER_PWD" jdbcType="VARCHAR" property="userPwd" />
     <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
-    <result column="ROLE_ID" jdbcType="INTEGER" property="roleId" />
+    <result column="ROLE_ID" jdbcType="VARCHAR" property="roleId" />
     <result column="MOBILE" jdbcType="VARCHAR" property="mobile" />
     <result column="EMAIL" jdbcType="VARCHAR" property="email" />
     <result column="PHONE" jdbcType="VARCHAR" property="phone" />
@@ -18,7 +18,12 @@
     <result column="MAC" jdbcType="VARCHAR" property="mac" />
     <result column="LOGIN_IPS" jdbcType="VARCHAR" property="loginIps" />
     <result column="MEMO" jdbcType="VARCHAR" property="memo" />
+    <result column="CREATE_DATE" jdbcType="VARCHAR" property="createDate" />
+    <result column="UPDATE_DATE" jdbcType="VARCHAR" property="updateDate" />
+    <result column="CREATE_BY" jdbcType="INTEGER" property="createBy" />
+    <result column="UPDATE_BY" jdbcType="INTEGER" property="updateBy" />
   </resultMap>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from BASE_SYS_USER
     where USER_ID = #{userId,jdbcType=INTEGER}
@@ -28,21 +33,25 @@
       USER_NAME, ROLE_ID, MOBILE, 
       EMAIL, PHONE, QQ, GENDER, 
       STATUS, SALT, LAST_LOGIN_TIME, 
-      MAC, LOGIN_IPS, MEMO
-      )
+      MAC, LOGIN_IPS, MEMO, 
+      CREATE_DATE, UPDATE_DATE, CREATE_BY, 
+      UPDATE_BY)
     values (#{userId,jdbcType=INTEGER}, #{userNo,jdbcType=VARCHAR}, #{userPwd,jdbcType=VARCHAR}, 
-      #{userName,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{salt,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
-      #{mac,jdbcType=VARCHAR}, #{loginIps,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}
-      )
+      #{mac,jdbcType=VARCHAR}, #{loginIps,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}, #{createBy,jdbcType=INTEGER}, 
+      #{updateBy,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="BaseSysUser">
     update BASE_SYS_USER
-    set USER_NO = #{userNo,jdbcType=VARCHAR},
+    <!-- 该标签会前置SET关键字，且消除无意义的逗号 -->  
+    <set>
+      USER_NO = #{userNo,jdbcType=VARCHAR},
       USER_PWD = #{userPwd,jdbcType=VARCHAR},
       USER_NAME = #{userName,jdbcType=VARCHAR},
-      ROLE_ID = #{roleId,jdbcType=INTEGER},
+      ROLE_ID = #{roleId,jdbcType=VARCHAR},
       MOBILE = #{mobile,jdbcType=VARCHAR},
       EMAIL = #{email,jdbcType=VARCHAR},
       PHONE = #{phone,jdbcType=VARCHAR},
@@ -53,23 +62,30 @@
       LAST_LOGIN_TIME = #{lastLoginTime,jdbcType=TIMESTAMP},
       MAC = #{mac,jdbcType=VARCHAR},
       LOGIN_IPS = #{loginIps,jdbcType=VARCHAR},
-      MEMO = #{memo,jdbcType=VARCHAR}
+      MEMO = #{memo,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      CREATE_BY = #{createBy,jdbcType=INTEGER},
+      UPDATE_BY = #{updateBy,jdbcType=INTEGER}
+    </set>
     where USER_ID = #{userId,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseSysUserResultMap">
     select USER_ID, USER_NO, USER_PWD, USER_NAME, ROLE_ID, MOBILE, EMAIL, PHONE, QQ, 
-    GENDER, STATUS, SALT, LAST_LOGIN_TIME, MAC, LOGIN_IPS, MEMO
+    GENDER, STATUS, SALT, LAST_LOGIN_TIME, MAC, LOGIN_IPS, MEMO, CREATE_DATE, UPDATE_DATE, 
+    CREATE_BY, UPDATE_BY
     from BASE_SYS_USER
     where USER_ID = #{userId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseSysUserResultMap">
     select USER_ID, USER_NO, USER_PWD, USER_NAME, ROLE_ID, MOBILE, EMAIL, PHONE, QQ, 
-    GENDER, STATUS, SALT, LAST_LOGIN_TIME, MAC, LOGIN_IPS, MEMO
+    GENDER, STATUS, SALT, LAST_LOGIN_TIME, MAC, LOGIN_IPS, MEMO, CREATE_DATE, UPDATE_DATE, 
+    CREATE_BY, UPDATE_BY
     from BASE_SYS_USER
   </select>
   
   	<!-- 通过用户名获取数据 -->
-	<select id="findByUserNo" parameterType="pd" resultType="pd" useCache="false">
+	<select id="findByUserNo" parameterType="BaseSysUser" resultMap="BaseSysUserResultMap" useCache="false">
 		select 
 			USER_ID, 
 			USER_NO, 
@@ -86,10 +102,14 @@
     		LAST_LOGIN_TIME, 
     		MAC, 
     		LOGIN_IPS, 
-    		MEMO
+    		MEMO,
+    		CREATE_DATE, 
+    		UPDATE_DATE, 
+    		CREATE_BY, 
+    		UPDATE_BY
 		from 
 			BASE_SYS_USER
 		where 
-			USER_NO = #{USER_NO}
+			USER_NO = #{userNo,jdbcType=VARCHAR}
 	</select>
 </mapper>

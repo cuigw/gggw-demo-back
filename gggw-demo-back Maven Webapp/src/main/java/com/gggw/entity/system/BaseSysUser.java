@@ -11,7 +11,7 @@ public class BaseSysUser {
 
     private String userName;
 
-    private Integer roleId;
+    private String roleId;
 
     private String mobile;
 
@@ -34,6 +34,14 @@ public class BaseSysUser {
     private String loginIps;
 
     private String memo;
+
+    private String createDate;
+
+    private String updateDate;
+
+    private Integer createBy;
+
+    private Integer updateBy;
 
     public Integer getUserId() {
         return userId;
@@ -67,12 +75,12 @@ public class BaseSysUser {
         this.userName = userName == null ? null : userName.trim();
     }
 
-    public Integer getRoleId() {
+    public String getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
+    public void setRoleId(String roleId) {
+        this.roleId = roleId == null ? null : roleId.trim();
     }
 
     public String getMobile() {
@@ -161,5 +169,37 @@ public class BaseSysUser {
 
     public void setMemo(String memo) {
         this.memo = memo == null ? null : memo.trim();
+    }
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate == null ? null : createDate.trim();
+    }
+
+    public String getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(String updateDate) {
+        this.updateDate = updateDate == null ? null : updateDate.trim();
+    }
+
+    public Integer getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(Integer createBy) {
+        this.createBy = createBy;
+    }
+
+    public Integer getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(Integer updateBy) {
+        this.updateBy = updateBy;
     }
 }

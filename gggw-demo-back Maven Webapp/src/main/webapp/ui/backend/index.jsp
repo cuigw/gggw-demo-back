@@ -622,7 +622,7 @@
          			//修改title
          			$(document).attr("title", title);
          			//修改地址
-         			history.pushState(null, title ,url);
+         			//history.pushState(null, title ,url);
          			$("#page-wrapper").html(data);
          		}
          	});
