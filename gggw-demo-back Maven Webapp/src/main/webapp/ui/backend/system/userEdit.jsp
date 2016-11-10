@@ -34,109 +34,53 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <form role="form">
-                                        <div class="form-group">
+                                    <form role="form" id="userForm">
+                                        <div class="form-group has-feedback">
                                             <label>用户编号</label>
-                                            <input class="form-control">
+                                            <input class="form-control" placeholder="请输入用户编号" name="userNo">
+                                            <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+                                            <span class="text-danger">（*必填项）</span>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label>密码</label>
+                                            <input type="password"   class="form-control" placeholder="请输入密码" name="userPwd">
                                             <p class="text-danger">（*必填项）</p>
                                         </div>
-                                        <div class="form-group">
-                                            <label>Text Input with Placeholder</label>
-                                            <input class="form-control" placeholder="Enter text">
+                                        <div class="form-group has-feedback">
+                                            <label>重复密码</label>
+                                            <input type="password"  class="form-control" placeholder="请重新输入密码">
+                                            <p class="text-danger">（*必填项）</p>
                                         </div>
-                                        <div class="form-group">
-                                            <label>Static Control</label>
-                                            <p class="form-control-static">email@example.com</p>
+                                        <div class="form-group has-feedback">
+                                            <label>姓名</label>
+                                            <input class="form-control" placeholder="请输入姓名" name="userName">
+                                            <p class="text-danger">（*必填项）</p>
                                         </div>
-                                        <div class="form-group">
-                                            <label>File input</label>
-                                            <input type="file">
+                                        <div class="form-group has-feedback">
+                                            <label>手机号码</label>
+                                            <input class="form-control" placeholder="请输入手机号码" name="mobile">
                                         </div>
-                                        <div class="form-group">
-                                            <label>Text area</label>
-                                            <textarea class="form-control" rows="3"></textarea>
+
+                                        <div class="form-group has-feedback">
+                                            <label>邮箱</label>
+                                            <input class="form-control" placeholder="请输入邮箱" name="email">
                                         </div>
-                                        <div class="form-group">
-                                            <label>Checkboxes</label>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" value="">Checkbox 1
-                                                </label>
-                                            </div>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" value="">Checkbox 2
-                                                </label>
-                                            </div>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" value="">Checkbox 3
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Inline Checkboxes</label>
+                                        <div class="form-group has-feedback">
+                                            <div><label>请选择角色</label></div>
                                             <label class="checkbox-inline">
-                                                <input type="checkbox">1
+                                                <input type="checkbox">系统管理员
                                             </label>
                                             <label class="checkbox-inline">
-                                                <input type="checkbox">2
+                                                <input type="checkbox">操作员
                                             </label>
                                             <label class="checkbox-inline">
-                                                <input type="checkbox">3
+                                                <input type="checkbox">用户
                                             </label>
                                         </div>
-                                        <div class="form-group">
-                                            <label>Radio Buttons</label>
-                                            <div class="radio">
-                                                <label>
-                                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>Radio 1
-                                                </label>
-                                            </div>
-                                            <div class="radio">
-                                                <label>
-                                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">Radio 2
-                                                </label>
-                                            </div>
-                                            <div class="radio">
-                                                <label>
-                                                    <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">Radio 3
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Inline Radio Buttons</label>
-                                            <label class="radio-inline">
-                                                <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="option1" checked>1
-                                            </label>
-                                            <label class="radio-inline">
-                                                <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="option2">2
-                                            </label>
-                                            <label class="radio-inline">
-                                                <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline3" value="option3">3
-                                            </label>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Selects</label>
-                                            <select class="form-control">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Multiple Selects</label>
-                                            <select multiple class="form-control">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                            </select>
-                                        </div>
-                                        <button type="button" class="btn btn-primary">提   交</button>
+
+
+
+                                        <button type="button" class="btn btn-primary" id="commit">提   交</button>
                                         <button type="button" class="btn btn-default">取   消</button>
                                     </form>
                                 </div>
@@ -157,5 +101,12 @@
 <!-- page-wrapper   end -->
 
 <script>
-    
+    $("#commit").click(function() {
+        debugger;
+        var url = "${contextPath }/ajaxUserEdit"
+        var params = $("#userForm").serializeArray();
+        $.getJSON(url, params, function(data) {
+           alert(data);
+        });
+    });
 </script>
