@@ -9,7 +9,7 @@ import com.gggw.core.utils.PropertiesUtil;
  * 开发时间: 2016/8/17<br>
  */
 public abstract class AbstractKospService implements Counter{
-    private static final String kospRunMode = PropertiesUtil.get("kosp.run.mode", "");
+    private static final String kospRunMode = "run";
 
     protected  Boolean isRunMode(){
         return !kospRunMode.equals("debug");
