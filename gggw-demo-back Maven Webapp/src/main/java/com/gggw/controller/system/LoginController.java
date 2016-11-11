@@ -78,19 +78,43 @@ public class LoginController extends BaseController{
 	private CounterServiceFactory counterFactory;
 	@Autowired
 	private IImageCodeService verifyCodeService;
+	
+	/**
+	 * 主页
+	 */
+	@NoLogin
+	@RequestMapping(value="toHomeA")
+	@ResponseBody
+	public ModelAndView toHomeA(HttpServletRequest request, HttpServletResponse response)throws Exception{
+		ModelAndView modelAndView = new ModelAndView();
+		//modelAndView.setViewName("ui/back/login");
+        modelAndView.addObject("menuHtml", getMenuList());
+        System.out.println(getMenuList());
+        modelAndView.setViewName("ui/backend/index");
+		return modelAndView;
+	}
+	
+	/**
+	 * 登录页
+	 */
+	@NoLogin
+	@RequestMapping(value="toLoginA")
+	@ResponseBody
+	public ModelAndView toLoginA(HttpServletRequest request, HttpServletResponse response)throws Exception{
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("ui/backend/login");
+		return modelAndView;
+	}
 
 	/**
-	 * 请求登录，验证用户
+	 * 登录页
 	 */
 	@NoLogin
 	@RequestMapping(value="toLogin")
 	@ResponseBody
 	public ModelAndView toLogin(HttpServletRequest request, HttpServletResponse response)throws Exception{
 		ModelAndView modelAndView = new ModelAndView();
-		//modelAndView.setViewName("ui/back/login");
-        modelAndView.addObject("menuHtml", getMenuList());
-        System.out.println(getMenuList());
-        modelAndView.setViewName("ui/backend/index");
+		modelAndView.setViewName("ui/back/login");
 		return modelAndView;
 	}
 
