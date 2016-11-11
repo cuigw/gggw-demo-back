@@ -57,13 +57,28 @@ public class AESUtil {
          *2.使用默认密钥
          *3.没有设密钥
          */
+        /**这种new SecureRandom(password.getBytes()) 的方式 在linux和windows下会出现不同， 所以放弃，使用另一种方式
         if (StringUtils.isNotBlank(password)) {
         	kg.init(128, new SecureRandom(password.getBytes()));
         } else if (StringUtils.isNotBlank(AES_PRIVATE_KEY)) {
         	kg.init(128, new SecureRandom(AES_PRIVATE_KEY.getBytes()));
         } else {
         	kg.init(128);
-        }        
+        }   */
+        try{
+            SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+            if (StringUtils.isNotBlank(password)) {
+                random.setSeed(password.getBytes());
+                kg.init(128, random);
+            } else if (StringUtils.isNotBlank(AES_PRIVATE_KEY)) {
+                random.setSeed(AES_PRIVATE_KEY.getBytes());
+                kg.init(128, random);
+            } else {
+                kg.init(128);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         //生成一个密钥
         SecretKey  secretKey = kg.generateKey();
         return secretKey.getEncoded();

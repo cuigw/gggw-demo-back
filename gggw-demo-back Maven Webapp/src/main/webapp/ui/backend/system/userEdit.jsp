@@ -91,7 +91,7 @@
 										</div>
 
                                         <button type="button" class="btn btn-primary" id="commit">提   交</button>
-                                        <button type="button" class="btn btn-default">取   消</button>
+                                        <button type="button" class="btn btn-default" onclick="toPage(this, '/toUser', '')">取   消</button>
                                     </form>
                                 </div>
                                 <!-- /.col-lg-6 (nested) -->
@@ -155,17 +155,17 @@
 		var params = $("#userForm").serializeArray();
 		$.getJSON(url, params, function(data) {
 			if (data.error_no == "0") {
-				alert(data.error_info);
+                showError(data.error_info);
 			} else {
-				alert(data.error_info);
+                showError(data.error_info);
 			}
 		});
 	});
 
 	//检验不为空
 	function checkNotBlank() {
+        var valid = true;
 		$("#userForm :input").each(function() {
-			var valid = true;
 			if ($(this).attr("valid") == "NotBlank" && $(this).val() == "") {
 				showError($(this).attr("placeholder"));
 				checkErrorHandle(this);
