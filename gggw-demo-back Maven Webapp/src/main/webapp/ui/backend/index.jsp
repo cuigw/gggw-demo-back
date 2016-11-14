@@ -20,7 +20,7 @@
 		<!-- Custom Fonts -->
 		<link href="${contextPath }/vendor/font-awesome/css/font-awesome.min.css"
 					rel="stylesheet" type="text/css">
-		
+
 		<!-- jQuery -->
 		<script src="${contextPath }/vendor/jquery/jquery.min.js"></script>		
 		<!-- Bootstrap Core JavaScript -->
@@ -33,6 +33,14 @@
 		    <script src="../data/morris-data.js"></script>-->		
 		<!-- Custom Theme JavaScript -->
 		<script src="${contextPath }/vendor/js/sb-admin-2.js"></script>
+
+        <!-- DataTables CSS -->
+        <link href="${contextPath }/vendor/datatables/dataTables.bootstrap.css" rel="stylesheet">
+        <link href="${contextPath }/vendor/datatables/dataTables.responsive.css" rel="stylesheet">
+        <!-- DataTables JavaScript -->
+        <script src="${contextPath }/vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="${contextPath }/vendor/datatables/dataTables.bootstrap.min.js"></script>
+        <script src="${contextPath }/vendor/datatables/dataTables.responsive.js"></script>
 </head>
   
   <body>

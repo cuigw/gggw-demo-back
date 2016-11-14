@@ -30,16 +30,17 @@ public class Paginator implements java.io.Serializable {
 	private Boolean 	showFirstPage;		// 是否需要显示第一页
 	private Boolean 	showLastPage;		// 是否需要显示最后一页
 	
-	private Object data;
+	private Object data;					//分页数据
+    private int draw; 						//datatables返回值
 
-	public Paginator(int pageNum, int pageSize, int recordsTotal, int recordsFiltered, Object data) {
+	public Paginator(int pageNum, int pageSize, int recordsTotal, int recordsFiltered, Object data, int draw) {
 		super();
 		this.pageSize = pageSize;
 		this.recordsTotal = recordsTotal;
 		this.recordsFiltered = recordsFiltered;
 		this.pageNum = computePageNo(pageNum);
 		this.data = data;		
-		
+		this.draw = draw;
 		calc();
 	}
 	
@@ -125,62 +126,62 @@ public class Paginator implements java.io.Serializable {
 		this.recordsFiltered = recordsFiltered;
 	}
 
-	public int getPageNum() {
-		return pageNum;
-	}
-	public int getPageSize() {
-		return pageSize;
-	}
+//	public int getPageNum() {
+//		return pageNum;
+//	}
+//	public int getPageSize() {
+//		return pageSize;
+//	}
 	public int getRecordsTotal() {
 		return recordsTotal;
 	}
-	public int getTotalPages() {
-		return totalPages;
-	}
-
-	public Boolean getIsFirstPage() {
-		return isFirstPage;
-	}
-
-	public Boolean getIsLastPage() {
-		return isLastPage;
-	}
-
-	public Integer[] getNumList() {
-		return numList;
-	}
-
-	public int getPrePageNum() {
-		return prePageNum;
-	}
-
-	public int getNextPageNum() {
-		return nextPageNum;
-	}
-
-	public Boolean getHasPrePage() {
-		return hasPrePage;
-	}
-
-	public Boolean getHasNextPage() {
-		return hasNextPage;
-	}
-
-	public Boolean getHasBegDotDot() {
-		return hasBegDotDot;
-	}
-
-	public Boolean getHasEndDotDot() {
-		return hasEndDotDot;
-	}
-
-	public Boolean getShowLastPage() {
-		return showLastPage;
-	}
-
-	public Boolean getShowFirstPage() {
-		return showFirstPage;
-	}
+//	public int getTotalPages() {
+//		return totalPages;
+//	}
+//
+//	public Boolean getIsFirstPage() {
+//		return isFirstPage;
+//	}
+//
+//	public Boolean getIsLastPage() {
+//		return isLastPage;
+//	}
+//
+//	public Integer[] getNumList() {
+//		return numList;
+//	}
+//
+//	public int getPrePageNum() {
+//		return prePageNum;
+//	}
+//
+//	public int getNextPageNum() {
+//		return nextPageNum;
+//	}
+//
+//	public Boolean getHasPrePage() {
+//		return hasPrePage;
+//	}
+//
+//	public Boolean getHasNextPage() {
+//		return hasNextPage;
+//	}
+//
+//	public Boolean getHasBegDotDot() {
+//		return hasBegDotDot;
+//	}
+//
+//	public Boolean getHasEndDotDot() {
+//		return hasEndDotDot;
+//	}
+//
+//	public Boolean getShowLastPage() {
+//		return showLastPage;
+//	}
+//
+//	public Boolean getShowFirstPage() {
+//		return showFirstPage;
+//	}
 	
 	public Object getData() {
 		return data;
@@ -189,7 +190,15 @@ public class Paginator implements java.io.Serializable {
 	public void setData(Object data) {
 		this.data = data;
 	}
-	
+
+	public int getDraw() {
+		return draw;
+	}
+
+	public void setDraw(int draw) {
+		this.draw = draw;
+	}
+
 	/**
 	 * 页码滑动窗口，并将当前页尽可能地放在滑动窗口的中间部位。
 	 * @param currentPageNumber
@@ -277,7 +286,7 @@ public class Paginator implements java.io.Serializable {
 		bs.setUserNo("aaa");
 		bs.setUserName("bbb");
 		
-		Paginator paginator = new Paginator(10, 20, 5, 5, bs);
+		Paginator paginator = new Paginator(10, 20, 5, 5, bs, 1);
 		System.out.println(FastJsonUtil.toJSONString(paginator));
 	}
 }

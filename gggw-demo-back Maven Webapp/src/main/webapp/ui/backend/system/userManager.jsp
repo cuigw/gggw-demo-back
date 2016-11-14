@@ -4,14 +4,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
-<!-- DataTables CSS -->
-<link href="${contextPath }/vendor/datatables/dataTables.bootstrap.css" rel="stylesheet">
-<link href="${contextPath }/vendor/datatables/dataTables.responsive.css" rel="stylesheet">
-<!-- DataTables JavaScript -->
-<script src="${contextPath }/vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="${contextPath }/vendor/datatables/dataTables.bootstrap.min.js"></script>
-<script src="${contextPath }/vendor/datatables/dataTables.responsive.js"></script>
-
 <!-- page-wrapper  start -->
 
 		<div class="row">
@@ -43,7 +35,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+
                                 </tbody>
                             </table>
                             <!-- /.table-responsive -->
@@ -104,16 +96,24 @@
         	order: [], //取消默认排序查询,否则复选框一列会出现小箭头
         	ordering: false,
         	pagingType: "full_numbers", //分页样式：simple,simple_numbers,full,full_numbers
-        	columnDefs: [{
-			  "targets": "nosort", //列的样式名
-			  "orderable": false //包含上样式名‘nosort'的禁止排序
-			  }],
             responsive: true,
             ajax: {
 		        url: "${contextPath }/ajaxUserList",
 		        type: "POST",
 		        dataType : "json",
-		    }
+                success : function(data){
+                    debugger;
+                    console.info(data);
+                }
+
+		    },
+            columns: [
+                { "data": "userNo" },
+                { "data": "userName" },
+                { "data": "mobile" },
+                { "data": "email" },
+                { "data": "userPwd" }
+            ]
         });
     }
 </script>

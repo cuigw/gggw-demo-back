@@ -16,7 +16,8 @@ import org.springframework.stereotype.Service;
 
 import com.gggw.util.PageData;
 import com.gggw.dao.DaoSupport;
-import com.sun.tools.javac.util.List;
+
+import java.util.List;
 
 /**
  * ClassName:SysUserService <br/>
@@ -45,7 +46,7 @@ public class SysUserService {
 	 * 查询所有用户
 	 */
 	public List<BaseSysUser> getUserList(BaseSysUser user)throws Exception{
-		return (List<BaseSysUser>) dao.findForObject("BaseSysUserMapper.selectAll", user);
+		return (List<BaseSysUser>) dao.findForList("BaseSysUserMapper.selectAll", null);
 	}
 	
 	/**
