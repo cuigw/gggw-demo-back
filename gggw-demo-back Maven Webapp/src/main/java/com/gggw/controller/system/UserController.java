@@ -4,9 +4,12 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gggw.entity.Paginator;
 import com.gggw.entity.system.BaseSysUser;
 import com.gggw.result.SisapResult;
 import com.gggw.service.system.SysUserService;
+import com.gggw.util.PageData;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.gggw.controller.base.BaseController;
 import com.gggw.core.annotation.NoLogin;
 import com.gggw.core.utils.AESUtil;
+import com.sun.tools.javac.util.List;
 
 /**
  * ClassName:UserController <br/>
@@ -53,6 +57,27 @@ public class UserController extends BaseController{
 		return modelAndView;
 	}
 
+	
+	//==================================       ajaxFunction start          =====================================//
+	
+	/**
+	 * ajax 获取分页数据
+	 */
+	@RequestMapping(value="ajaxUserList")
+	@ResponseBody
+	public Object ajaxUserList() {
+		try {
+			PageData pd = this.getPageData();		
+			System.out.println(pd);
+			List<BaseSysUser> userList = sysUserService.getUserList(new BaseSysUser());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
+		return new Paginator(1, 2, 5, 5, userList);
+	}
+	
 	/**
 	 * ajax 新增/修改 用户
 	 */
@@ -80,5 +105,7 @@ public class UserController extends BaseController{
 		}
 		return sisapResult;
 	}
+	
+	//==================================       ajaxFunction end          =====================================//
 }
 
