@@ -39,9 +39,11 @@
 
 <body>
 
-    <div class="container">
+       <div class="container">
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
+
+                <!-- login start-->
                 <div class="login-panel panel panel-primary">
                     <div class="panel-heading text-center">
                         <h3 class="panel-title">登 录</h3>
@@ -50,20 +52,20 @@
 
                         <h3 class="page-header text-center text-info" style="margin-top: 0px">请输入用户名密码</h3>
 
-                        <form role="form">
+                        <form role="loginForm">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                                    <input class="form-control" placeholder="请输入用户名" name="email" type="email" autofocus>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                    <input class="form-control" placeholder="请输入密码" name="password" type="password" value="">
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                                        <input name="remember" type="checkbox" value="Remember Me">记住我
                                     </label>
                                     <!-- Change this to a button or input when using this as a form -->
-                                    <a href="index.html" class="btn btn-primary pull-right">Login</a>
+                                    <a href="index.html" class="btn btn-primary pull-right" id="loginButton">登录</a>
                                 </div>
 
                             </fieldset>
@@ -74,9 +76,92 @@
                         <a href="index.html" class="pull-right">现在注册 <i class="fa fa-arrow-right fa-fw"></i></a>
                     </div>
                 </div>
+                <!-- login end-->
+
+                <!-- regist start-->
+                <div class="login-panel panel panel-green" >
+                    <div class="panel-heading text-center">
+                        <h3 class="panel-title">注 册</h3>
+                    </div>
+                    <div class="panel-body">
+
+                        <h3 class="page-header text-center text-success" style="margin-top: 0px">新用户注册</h3>
+
+                        <form role="registForm">
+                            <fieldset>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="请输入用户名" name="email" type="email" autofocus>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="请输入用密码" name="password" type="password" value="">
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="" name="email" type="email" autofocus>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="" name="password" type="password" value="">
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="" name="email" type="email" autofocus>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="" name="password" type="password" value="">
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="" name="email" type="email" autofocus>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="" name="password" type="password" value="">
+                                </div>
+                                <div class="form-group">
+                                    <!-- Change this to a button or input when using this as a form -->
+                                    <a href="index.html" class="btn btn-success pull-right" id="registButton">注册</a>
+                                </div>
+
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="panel-footer text-center">
+                        <a href="index.html" class="text-success"><i class="fa fa-arrow-left fa-fw"></i> 返回登录</a>
+                    </div>
+                </div>
+                <!-- regist end-->
+
+                <!-- forgotPWD start-->
+                <div class="login-panel panel panel-red" >
+                    <div class="panel-heading text-center">
+                        <h3 class="panel-title">忘记密码</h3>
+                    </div>
+                    <div class="panel-body">
+
+                        <h3 class="page-header text-center text-danger" style="margin-top: 0px">请输入您的邮箱</h3>
+
+                        <form role="forgotPWDForm">
+                            <fieldset>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="请输入用户名" name="email" type="email" autofocus>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="请输入用密码" name="password" type="password" value="">
+                                </div>
+                                <div class="form-group">
+                                    <!-- Change this to a button or input when using this as a form -->
+                                    <a href="index.html" class="btn btn-danger pull-right" id="forgotPWDButton">发送</a>
+                                </div>
+
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="panel-footer text-center">
+                        <a href="index.html" class="text-danger">返回登录 <i class="fa fa-arrow-right fa-fw"></i></a>
+                    </div>
+                </div>
+                <!-- forgotPWD end-->
+
             </div>
         </div>
     </div>
+    
 
 </body>
 
