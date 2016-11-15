@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gggw.core.utils.FastJsonUtil;
 import com.gggw.entity.Paginator;
 import com.gggw.entity.system.BaseSysUser;
 import com.gggw.result.SisapResult;
@@ -20,7 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.gggw.controller.base.BaseController;
 import com.gggw.core.annotation.NoLogin;
 import com.gggw.core.utils.AESUtil;
-import com.sun.tools.javac.util.List;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ClassName:UserController <br/>
@@ -66,16 +69,17 @@ public class UserController extends BaseController{
 	@RequestMapping(value="ajaxUserList")
 	@ResponseBody
 	public Object ajaxUserList() {
+		List<BaseSysUser> userList = new ArrayList<BaseSysUser>();
+		PageData pd = this.getPageData();
 		try {
-			PageData pd = this.getPageData();		
 			System.out.println(pd);
-			List<BaseSysUser> userList = sysUserService.getUserList(new BaseSysUser());
+			userList = sysUserService.getUserList(new BaseSysUser());
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
-		
-		return new Paginator(1, 2, 5, 5, userList);
+
+		System.out.println(FastJsonUtil.toJSONString( new Paginator(1, 2, 11, 11, userList, Integer.parseInt(pd.get("draw").toString()))));
+		return FastJsonUtil.toJSONString( new Paginator(1, 2, 11, 11, userList, Integer.parseInt(pd.get("draw").toString())));
 	}
 	
 	/**
