@@ -14,10 +14,10 @@ import javax.annotation.Resource;
 import com.gggw.entity.system.BaseSysUser;
 import org.springframework.stereotype.Service;
 
-import com.gggw.util.PageData;
 import com.gggw.dao.DaoSupport;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * ClassName:SysUserService <br/>
@@ -45,10 +45,17 @@ public class SysUserService {
 	/**
 	 * 查询所有用户
 	 */
-	public List<BaseSysUser> getUserList(BaseSysUser user)throws Exception{
-		return (List<BaseSysUser>) dao.findForList("BaseSysUserMapper.selectAll", null);
+	public List<BaseSysUser> getUserListAll(Map<String, Integer> params) throws Exception{
+		return (List<BaseSysUser>) dao.findForList("BaseSysUserMapper.selectAll", params);
 	}
-	
+
+	/**
+	 * 查询所有用户的总数
+	 */
+	public Integer getUserListAllCount() throws  Exception{
+		return (Integer)dao.findForObject("BaseSysUserMapper.selectAllCount", null);
+	}
+
 	/**
 	 * 新增用户
 	 */

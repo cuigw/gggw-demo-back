@@ -77,12 +77,24 @@
     from BASE_SYS_USER
     where USER_ID = #{userId,jdbcType=INTEGER}
   </select>
-  <select id="selectAll" resultMap="BaseSysUserResultMap">
+  <select id="selectAll" resultMap="BaseSysUserResultMap" parameterType="java.util.Map">
     select USER_ID, USER_NO, USER_PWD, USER_NAME, ROLE_ID, MOBILE, EMAIL, PHONE, QQ, 
     GENDER, STATUS, SALT, LAST_LOGIN_TIME, MAC, LOGIN_IPS, MEMO, CREATE_DATE, UPDATE_DATE, 
     CREATE_BY, UPDATE_BY
-    from BASE_SYS_USER
+    from BASE_SYS_USER limit #{start}, #{end}
   </select>
+
+    <select id="selectAllCount" resultType="java.lang.Integer">
+        select count(*)
+        from BASE_SYS_USER
+    </select>
+
+    <select id="selectAllPage" resultMap="BaseSysUserResultMap">
+        select USER_ID, USER_NO, USER_PWD, USER_NAME, ROLE_ID, MOBILE, EMAIL, PHONE, QQ,
+        GENDER, STATUS, SALT, LAST_LOGIN_TIME, MAC, LOGIN_IPS, MEMO, CREATE_DATE, UPDATE_DATE,
+        CREATE_BY, UPDATE_BY
+        from BASE_SYS_USER
+    </select>
   
   	<!-- 通过用户名获取数据 -->
 	<select id="findByUserNo" parameterType="BaseSysUser" resultMap="BaseSysUserResultMap" useCache="false">
