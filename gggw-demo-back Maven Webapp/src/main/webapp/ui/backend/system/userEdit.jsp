@@ -153,13 +153,20 @@
 
 		var url = "${contextPath }/ajaxUserEdit"
 		var params = $("#userForm").serializeArray();
-		$.getJSON(url, params, function(data) {
-			if (data.error_no == "0") {
-                showError(data.error_info);
-			} else {
-                showError(data.error_info);
-			}
-		});
+
+        $.ajax({
+           type : "post" ,
+           data : params,
+           url : url,
+           success: function(data) {
+               if (data.error_no == "0") {
+                   showError(data.error_info);
+               } else {
+                   showError(data.error_info);
+               }
+           }
+        });
+
 	});
 
 	//检验不为空

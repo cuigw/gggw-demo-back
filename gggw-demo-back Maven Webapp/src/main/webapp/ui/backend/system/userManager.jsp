@@ -91,28 +91,17 @@
         	stripeClasses: ["odd", "even"], //为奇偶行加上样式，兼容不支持CSS伪类的场合
         	serverSide: true, //启用服务器端分页
         	renderer: "bootstrap",//渲染样式：Bootstrap和jquery-ui
-        	searching: true, //禁用原生搜索
-  			orderMulti: false, //启用多列排序
-        	order: [], //取消默认排序查询,否则复选框一列会出现小箭头
-        	ordering: false,
-        	pagingType: "full_numbers", //分页样式：simple,simple_numbers,full,full_numbers
-            responsive: true,
+        	searching: false, //禁用原生搜索
             ajax: {
 		        url: "${contextPath }/ajaxUserList",
-		        type: "POST",
-		        dataType : "json",
-                success : function(data){
-                    debugger;
-                    console.info(data);
-                }
-
+		        type: "POST"
 		    },
             columns: [
                 { "data": "userNo" },
                 { "data": "userName" },
                 { "data": "mobile" },
                 { "data": "email" },
-                { "data": "userPwd" }
+                { "data": "memo" }
             ]
         });
     }

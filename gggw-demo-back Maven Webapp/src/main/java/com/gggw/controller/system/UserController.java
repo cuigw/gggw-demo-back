@@ -1,8 +1,6 @@
 package com.gggw.controller.system;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import com.gggw.core.utils.FastJsonUtil;
 import com.gggw.entity.Paginator;
@@ -19,11 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gggw.controller.base.BaseController;
-import com.gggw.core.annotation.NoLogin;
 import com.gggw.core.utils.AESUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * ClassName:UserController <br/>
@@ -70,16 +69,24 @@ public class UserController extends BaseController{
 	@ResponseBody
 	public Object ajaxUserList() {
 		List<BaseSysUser> userList = new ArrayList<BaseSysUser>();
+		int userListCount = 0;
+		int draw = 0;
+		int start = 0;
+		int length = 0;
 		PageData pd = this.getPageData();
+		Map<String, Integer> params = new HashMap<String, Integer>();
 		try {
-			System.out.println(pd);
-			userList = sysUserService.getUserList(new BaseSysUser());
+			draw = Integer.parseInt(pd.get("draw").toString());
+			start = Integer.parseInt(pd.get("start").toString());
+			length = Integer.parseInt(pd.get("length").toString());
+			params.put("start", start);
+			params.put("end", start+length);
+			userList = sysUserService.getUserListAll(params);
+			userListCount = sysUserService.getUserListAllCount();
 		} catch (Exception e) {
-			// TODO: handle exception
+			logger.error("UserController --> ajaxUserList error!", e);
 		}
-
-		System.out.println(FastJsonUtil.toJSONString( new Paginator(1, 2, 11, 11, userList, Integer.parseInt(pd.get("draw").toString()))));
-		return FastJsonUtil.toJSONString( new Paginator(1, 2, 11, 11, userList, Integer.parseInt(pd.get("draw").toString())));
+		return new Paginator(userListCount, userListCount, userList, draw);
 	}
 	
 	/**
@@ -103,7 +110,7 @@ public class UserController extends BaseController{
 			}	
 			
 		} catch (Exception e) {
-			logger.error("ajaxUserEdit --> error");
+			logger.error("UserController --> ajaxUserEdit error!");
 			sisapResult.setError_no("1");
 			sisapResult.setError_info("异常");
 		}
