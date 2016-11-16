@@ -76,11 +76,12 @@
             ],
             createdRow      :       function ( row, data, index ) {
                 //给当前行加样式
-                if (data.userNo=="000004") {
-                    $(row).addClass("danger");
+                if (data.userNo=="000003") {
+                    $(row).addClass("success");
                 }
                 //给当前行某列加样式
-                $('td', row).eq(3).addClass(data.email == "cuigw0293@cairenhui.com"?"text-success":"text-error");
+                debugger;
+                $('td', row).eq(3).addClass(data.email == "cuigw0293@cairenhui.com" ? "text-success":"text-error");
                 //不使用render，改用jquery文档操作呈现单元格
                 var $btnEdit =   $('<button type="button" class="btn btn-sm btn-primary btn-edit " >修改</button>  ');
                 var $btnDel  =   $('<button type="button" class="btn btn-sm btn-danger btn-del " >删除</button>');
@@ -97,7 +98,7 @@
         });
 
         //点击编辑按钮
-        $table.on("click","btn-edit",function() {
+        $table.on("click",".btn-edit",function() {
             debugger;
             var item = _table.row($(this).closest('tr')).data();
             $(this).closest('tr').addClass("info").siblings().removeClass("info");
