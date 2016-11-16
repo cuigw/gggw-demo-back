@@ -42,6 +42,10 @@
         <script src="${contextPath }/vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="${contextPath }/vendor/datatables/dataTables.bootstrap.min.js"></script>
         <script src="${contextPath }/vendor/datatables/dataTables.responsive.js"></script>
+
+        <!-- bootstrap-dialog  -->
+        <link href="${contextPath }/vendor/dialog/bootstrap-dialog.css" rel="stylesheet">
+        <script src="${contextPath }/vendor/dialog/bootstrap-dialog.js"></script>
 </head>
   
   <body>
