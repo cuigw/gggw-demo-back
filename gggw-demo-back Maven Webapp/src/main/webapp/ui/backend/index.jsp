@@ -33,6 +33,7 @@
 		    <script src="../data/morris-data.js"></script>-->		
 		<!-- Custom Theme JavaScript -->
 		<script src="${contextPath }/vendor/js/sb-admin-2.js"></script>
+        <script src="${contextPath }/vendor/js/constant.js"></script>
 
         <!-- DataTables CSS -->
         <link href="${contextPath }/vendor/datatables/dataTables.bootstrap.css" rel="stylesheet">
