@@ -62,9 +62,16 @@
                                             <span class="glyphicon  form-control-feedback"></span>
                                             <p class="text-danger">（*必填项）</p>
                                         </div>
+                                        <div class="form-group" >
+                                            <label>性别</label>
+                                            <select class="form-control" name="gender" id="gender">
+                                                <option>男</option>
+                                                <option>女</option>
+                                            </select>
+                                        </div>
                                         <div class="form-group has-feedback">
                                             <label>手机号码</label>
-                                            <input class="form-control" placeholder="请输入手机号码" name="mobile" id="mobile">
+                                            <input class="form-control" placeholder="请输入手机号码" name="mobile" id="mobile"  valid="NotBlank">
                                         </div>
 
                                         <div class="form-group has-feedback">
@@ -72,6 +79,14 @@
                                             <input class="form-control" placeholder="请输入邮箱" name="email" id="email"  valid="NotBlank">
                                             <span class="glyphicon  form-control-feedback"></span>
                                             <p class="text-danger">（*必填项）</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>状态</label>
+                                            <select class="form-control" name="status" id="status">
+                                                <option>正常</option>
+                                                <option>停用</option>
+                                                <option>注销</option>
+                                            </select>
                                         </div>
                                         <div class="form-group has-feedback">
                                             <div><label>请选择角色</label></div>
@@ -107,7 +122,7 @@
                 <!-- /.col-lg-12 -->
             </div>
 
-			<!-- Modal -->
+			<!-- Modal
 			<div class="modal fade" id="errorModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			  <div class="modal-dialog">
 			    <div class="modal-content">
@@ -119,11 +134,11 @@
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			        <!--  <button type="button" class="btn btn-primary">Save changes</button> -->
+			         <button type="button" class="btn btn-primary">Save changes</button>
 			      </div>
 			    </div>
 			  </div>
-			</div>
+			</div>-->
 
 <!-- page-wrapper   end -->
 
@@ -135,7 +150,7 @@
 		var userPwd = $("#userPwd").val();
 		var reUserPwd = $("#reUserPwd").val();
 
-		if (!checkNotBlank()) {
+		if (!checkNotBlank($("#userForm"))) {
 			return;
 		}
 
@@ -168,37 +183,4 @@
         });
 
 	});
-
-	//检验不为空
-	function checkNotBlank() {
-        var valid = true;
-		$("#userForm :input").each(function() {
-			if ($(this).attr("valid") == "NotBlank" && $(this).val() == "") {
-				showError($(this).attr("placeholder"));
-				checkErrorHandle(this);
-				valid = false;
-				return false;
-			}
-		});
-		return valid;
-	}
-
-	function valChange(obj) {
-		//js Dom 转为 jqery对象    obj     $(obj)  
-		$(obj).parent().removeClass("has-error");
-		$(obj).next().removeClass("glyphicon-warning-sign");
-		$(obj).removeAttr("oninput");
-	}
-
-	function checkErrorHandle(obj) {
-		$(obj).parent().addClass("has-error");
-		$(obj).next().addClass("glyphicon-warning-sign");
-		$(obj).focus();
-		$(obj).attr("oninput", "valChange(this)");
-	}
-	
-	function showError(errorModelBody) {
-		$('#errorModelBody').html(errorModelBody);
-		$('#errorModel').modal('show');
-	}
 </script>

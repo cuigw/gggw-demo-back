@@ -9,7 +9,7 @@
 		<div class="row">
             <div class="col-lg-12">
                 <h3 class="page-header text-primary">用户管理
-                	<button type="button" class="btn btn-outline btn-primary btn-sm" style="float:right;" onclick="toPage(this, '/toUserEdit', { operatType: '0' })" >添加用户</button>
+                	<button type="button" class="btn btn-outline btn-primary btn-sm pull-right"  onclick="toPage(this, '/toUserEdit', { operatType: '0' })" >添加用户</button>
                 </h3>
             </div>
             <!-- /.col-lg-12 -->
@@ -24,6 +24,42 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
+
+                            <div class="well">
+                                <form class="form-inline" role="form">
+                                    <div class="form-group">
+                                        <label >用户编号：</label>
+                                        <input type="text" class="form-control" id="userNo" name="userNo" placeholder="请输入用户编号">
+                                    </div>
+                                    <div class="form-group">
+                                        <label >姓名：</label>
+                                        <input type="text" class="form-control" id="userName" name="userName" placeholder="请输入姓名">
+                                    </div>
+                                    <div class="form-group">
+                                        <label >邮箱：</label>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="请输入邮箱地址">
+                                    </div>
+                                    <div class="form-group">
+                                        <label >性别：</label>
+                                        <select class="form-control">
+                                            <option selected>全部</option>
+                                            <option>男</option>
+                                            <option>女</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label >状态：</label>
+                                        <select class="form-control">
+                                            <option selected>全部</option>
+                                            <option>正常</option>
+                                            <option>停用</option>
+                                            <option>注销</option>
+                                        </select>
+                                    </div>
+                                    <button type="button" class="btn btn-outline btn-primary btn-sm"><i class="fa fa-search"></i>  查询</button>
+                                </form>
+                            </div>
+
                             <table width="100%" class="table table-striped table-bordered table-hover" id="userList">
                                 <thead>
                                     <tr>
@@ -76,12 +112,13 @@
             ],
             createdRow      :       function ( row, data, index ) {
                 //给当前行加样式
+                /*
                 if (data.userNo=="000003") {
                     $(row).addClass("success");
-                }
+                }*/
                 //给当前行某列加样式
                 debugger;
-                $('td', row).eq(3).addClass(data.email == "cuigw0293@cairenhui.com" ? "text-success":"text-error");
+                //$('td', row).eq(3).addClass(data.email == "cuigw0293@cairenhui.com" ? "text-success":"text-error");
                 //不使用render，改用jquery文档操作呈现单元格
                 var $btnEdit =   $('<button type="button" class="btn btn-sm btn-primary btn-edit " >修改</button>  ');
                 var $btnDel  =   $('<button type="button" class="btn btn-sm btn-danger btn-del " >删除</button>');
@@ -107,6 +144,9 @@
     });
 
     function del(obj) {
+        BootstrapDialog.show({
+            message: 'Hi Apple!'
+        });
         alert("数据已经删除!" + obj.userNo + "   " + obj.userName);
     }
 

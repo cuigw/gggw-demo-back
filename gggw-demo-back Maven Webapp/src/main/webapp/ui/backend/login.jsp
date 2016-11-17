@@ -12,8 +12,8 @@
 		<title>Yeah~~~~</title>
 		<!-- Bootstrap Core CSS -->
 		<link href="${contextPath }/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">		
-		<!-- MetisMenu CSS 
-		<link href="${contextPath }/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">	-->	
+		<!-- MetisMenu CSS -->
+        <link href="${contextPath }/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 		<!-- Custom CSS -->
 		<link href="${contextPath }/vendor/css/sb-admin-2.css" rel="stylesheet">		
 		<!-- Morris Charts CSS 
@@ -26,8 +26,8 @@
 		<script src="${contextPath }/vendor/jquery/jquery.min.js"></script>		
 		<!-- Bootstrap Core JavaScript -->
 		<script src="${contextPath }/vendor/bootstrap/js/bootstrap.min.js"></script>		
-		<!-- Metis Menu Plugin JavaScript 
-		<script src="${contextPath }/vendor/metisMenu/metisMenu.min.js"></script>	-->	
+		<!-- Metis Menu Plugin JavaScript -->
+        <script src="${contextPath }/vendor/metisMenu/metisMenu.min.js"></script>
 		<!-- Morris Charts JavaScript 
 		    <script src="../vendor/raphael/raphael.min.js"></script>
 		    <script src="../vendor/morrisjs/morris.min.js"></script>
@@ -44,7 +44,7 @@
             <div class="col-md-4 col-md-offset-4">
 
                 <!-- login start-->
-                <div class="login-panel panel panel-primary">
+                <div class="login-panel panel panel-primary"  id="login-panel">
                     <div class="panel-heading text-center">
                         <h3 class="panel-title">登 录</h3>
                     </div>
@@ -65,21 +65,21 @@
                                         <input name="remember" type="checkbox" value="Remember Me">记住我
                                     </label>
                                     <!-- Change this to a button or input when using this as a form -->
-                                    <a href="index.html" class="btn btn-primary pull-right" id="loginButton">登录</a>
+                                    <a href="#" class="btn btn-primary pull-right" id="loginButton">登录</a>
                                 </div>
 
                             </fieldset>
                         </form>
                     </div>
                     <div class="panel-footer">
-                        <a href="index.html" class=""><i class="fa fa-arrow-left fa-fw"></i> 忘记密码</a>
-                        <a href="index.html" class="pull-right">现在注册 <i class="fa fa-arrow-right fa-fw"></i></a>
+                        <a href="#" class="toForgotPWD" ><i class="fa fa-arrow-left fa-fw"></i> 忘记密码</a>
+                        <a href="#" class="pull-right toRegist">现在注册 <i class="fa fa-arrow-right fa-fw"></i></a>
                     </div>
                 </div>
                 <!-- login end-->
 
                 <!-- regist start-->
-                <div class="login-panel panel panel-green" >
+                <div class="login-panel panel panel-green" hidden id="regist-panel">
                     <div class="panel-heading text-center">
                         <h3 class="panel-title">注 册</h3>
                     </div>
@@ -115,20 +115,21 @@
                                 </div>
                                 <div class="form-group">
                                     <!-- Change this to a button or input when using this as a form -->
-                                    <a href="index.html" class="btn btn-success pull-right" id="registButton">注册</a>
+                                    <button type="reset" class="btn btn-default" id="return">重置</button>
+                                    <a href="#" class="btn btn-success pull-right" id="registButton">注册</a>
                                 </div>
 
                             </fieldset>
                         </form>
                     </div>
                     <div class="panel-footer text-center">
-                        <a href="index.html" class="text-success"><i class="fa fa-arrow-left fa-fw"></i> 返回登录</a>
+                        <a href="#" class="text-success toLogin"><i class="fa fa-arrow-left fa-fw"></i> 返回登录</a>
                     </div>
                 </div>
                 <!-- regist end-->
 
                 <!-- forgotPWD start-->
-                <div class="login-panel panel panel-red" >
+                <div class="login-panel panel panel-red" hidden id="forgotPWD-panel">
                     <div class="panel-heading text-center">
                         <h3 class="panel-title">忘记密码</h3>
                     </div>
@@ -146,14 +147,14 @@
                                 </div>
                                 <div class="form-group">
                                     <!-- Change this to a button or input when using this as a form -->
-                                    <a href="index.html" class="btn btn-danger pull-right" id="forgotPWDButton">发送</a>
+                                    <a href="#" class="btn btn-danger pull-right" id="forgotPWDButton">发送</a>
                                 </div>
 
                             </fieldset>
                         </form>
                     </div>
                     <div class="panel-footer text-center">
-                        <a href="index.html" class="text-danger">返回登录 <i class="fa fa-arrow-right fa-fw"></i></a>
+                        <a href="#" class="text-danger toLogin">返回登录 <i class="fa fa-arrow-right fa-fw"></i></a>
                     </div>
                 </div>
                 <!-- forgotPWD end-->
@@ -161,8 +162,27 @@
             </div>
         </div>
     </div>
-    
 
 </body>
+<script>
+    $(function() {
+        $(".toLogin").click(function(){
+            debugger;
+            $(".panel").hide();
+            $("#login-panel").show();
+        });
+        $(".toRegist").click(function(){
+            debugger;
+            $(".panel").hide();
+            $("#regist-panel").show();
+        });
+        $(".toForgotPWD").click(function(){
+            debugger;
+            $(".panel").hide();
+            $("#forgotPWD-panel").show();
+        });
+
+    });
+</script>
 
 </html>
