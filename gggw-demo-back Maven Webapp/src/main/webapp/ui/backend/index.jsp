@@ -33,6 +33,7 @@
 		    <script src="../data/morris-data.js"></script>-->		
 		<!-- Custom Theme JavaScript -->
 		<script src="${contextPath }/vendor/js/sb-admin-2.js"></script>
+        <script src="${contextPath }/vendor/js/constant.js"></script>
 
         <!-- DataTables CSS -->
         <link href="${contextPath }/vendor/datatables/dataTables.bootstrap.css" rel="stylesheet">
@@ -41,6 +42,10 @@
         <script src="${contextPath }/vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="${contextPath }/vendor/datatables/dataTables.bootstrap.min.js"></script>
         <script src="${contextPath }/vendor/datatables/dataTables.responsive.js"></script>
+
+        <!-- bootstrap-dialog  -->
+        <link href="${contextPath }/vendor/dialog/bootstrap-dialog.css" rel="stylesheet">
+        <script src="${contextPath }/vendor/dialog/bootstrap-dialog.js"></script>
 </head>
   
   <body>
