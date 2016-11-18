@@ -81,7 +81,7 @@
     select USER_ID, USER_NO, USER_PWD, USER_NAME, ROLE_ID, MOBILE, EMAIL, PHONE, QQ, 
     GENDER, STATUS, SALT, LAST_LOGIN_TIME, MAC, LOGIN_IPS, MEMO, CREATE_DATE, UPDATE_DATE, 
     CREATE_BY, UPDATE_BY
-    from BASE_SYS_USER limit #{start}, #{end}
+    from BASE_SYS_USER limit #{start}, #{length}
   </select>
 
     <select id="selectAllCount" resultType="java.lang.Integer">
@@ -95,6 +95,33 @@
         CREATE_BY, UPDATE_BY
         from BASE_SYS_USER
     </select>
+  
+  	<!-- 通过model查询 -->
+  	<select id="selectByUser" resultMap="BaseSysUserResultMap" parameterType="BaseSysUser">
+  		select USER_ID, USER_NO, USER_PWD, USER_NAME, ROLE_ID, MOBILE, EMAIL, PHONE, QQ, 
+	    GENDER, STATUS, SALT, LAST_LOGIN_TIME, MAC, LOGIN_IPS, MEMO, CREATE_DATE, UPDATE_DATE, 
+	    CREATE_BY, UPDATE_BY
+	    from BASE_SYS_USER	u
+  		<where>  
+	        <if test="userNo!=null and userNo!='' ">  
+	           instr(u.USER_NO, #{userNo} )  > 0
+	        </if>  
+	        <if test="userName!=null and userName!='' ">  
+	          AND 	instr(u.USER_NAME, #{userName} )  > 0
+	        </if>   
+	        <if test="email!=null and email!='' ">  
+	          AND  	instr(u.EMAIL, #{email} )  > 0
+	        </if>  
+	        <if test="mobile!=null and mobile!='' ">  
+	          AND  	instr(u.MOBILE, #{mobile} )  > 0
+	        </if>  
+	        <if test="status!=null and status!='' ">  
+	          AND  	STATUS = #{status}
+	        </if>  
+	        
+	        select * from BASE_SYS_USER	u where DATE_FORMAT(CREATE_DATE, '%Y-%m-%d') > DATE_FORMAT( '2016-11-17', '%Y-%m-%d') 
+    	</where>  
+  	</select> 	
   
   	<!-- 通过用户名获取数据 -->
 	<select id="findByUserNo" parameterType="BaseSysUser" resultMap="BaseSysUserResultMap" useCache="false">
