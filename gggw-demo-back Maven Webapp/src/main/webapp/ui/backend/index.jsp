@@ -43,7 +43,12 @@
         <!-- bootstrap-dialog  -->
         <link href="${contextPath }/vendor/dialog/bootstrap-dialog.css" rel="stylesheet">
         <script src="${contextPath }/vendor/dialog/bootstrap-dialog.js"></script>
-
+        
+        <!-- datetimepicker -->
+		<script src="${contextPath }/vendor/datetimepicker/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+        <script src="${contextPath }/vendor/datetimepicker/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+        <link href="${contextPath }/vendor/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+        
         <!-- Custom Theme JavaScript -->
         <script src="${contextPath }/vendor/js/sb-admin-2.js"></script>
         <script src="${contextPath }/vendor/js/constant.js"></script>

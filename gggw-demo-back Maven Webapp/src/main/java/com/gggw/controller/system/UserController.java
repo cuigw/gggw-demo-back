@@ -1,13 +1,13 @@
 package com.gggw.controller.system;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
-import com.gggw.core.utils.FastJsonUtil;
+import com.gggw.entity.PageForm;
 import com.gggw.entity.Paginator;
 import com.gggw.entity.system.BaseSysUser;
 import com.gggw.result.SisapResult;
 import com.gggw.service.system.SysUserService;
-import com.gggw.util.PageData;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -62,31 +62,24 @@ public class UserController extends BaseController{
 	
 	//==================================       ajaxFunction start          =====================================//
 	
-	/**
+    /**
 	 * ajax 获取分页数据
 	 */
 	@RequestMapping(value="ajaxUserList")
 	@ResponseBody
-	public Object ajaxUserList() {
+	public Object ajaxUserList(@Valid PageForm pageForm) {
 		List<BaseSysUser> userList = new ArrayList<BaseSysUser>();
-		int userListCount = 0;
-		int draw = 0;
-		int start = 0;
-		int length = 0;
-		PageData pd = this.getPageData();
 		Map<String, Integer> params = new HashMap<String, Integer>();
+		int userListCount = 0;
 		try {
-			draw = Integer.parseInt(pd.get("draw").toString());
-			start = Integer.parseInt(pd.get("start").toString());
-			length = Integer.parseInt(pd.get("length").toString());
-			params.put("start", start);
-			params.put("end", start+length);
+			params.put("start", pageForm.getStart());
+			params.put("end", pageForm.getStart() + pageForm.getLength());
 			userList = sysUserService.getUserListAll(params);
 			userListCount = sysUserService.getUserListAllCount();
 		} catch (Exception e) {
 			logger.error("UserController --> ajaxUserList error!", e);
 		}
-		return new Paginator(userListCount, userListCount, userList, draw);
+		return new Paginator(userListCount, userListCount, userList, pageForm.getDraw());
 	}
 	
 	/**
