@@ -73,7 +73,7 @@ public class UserController extends BaseController{
 		int userListCount = 0;
 		try {
 			params.put("start", pageForm.getStart());
-			params.put("end", pageForm.getStart() + pageForm.getLength());
+			params.put("length", pageForm.getLength());
 			userList = sysUserService.getUserListAll(params);
 			userListCount = sysUserService.getUserListAllCount();
 		} catch (Exception e) {

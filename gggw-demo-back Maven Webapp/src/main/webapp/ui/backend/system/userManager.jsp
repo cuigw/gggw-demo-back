@@ -147,6 +147,11 @@
                 $('td', row).eq(5).append($btnEdit).append("  ").append($btnDel);
             }
         }));
+        
+         //行点击事件
+	    $("tbody",$table).on("click","tr",function(event) {
+	        $(this).addClass("info").siblings().removeClass("info");
+	    });
 
         //点击删除按钮
         $table.on("click",".btn-del",function() {
