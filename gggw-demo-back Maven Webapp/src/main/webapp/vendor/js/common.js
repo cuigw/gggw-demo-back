@@ -38,3 +38,10 @@ function showError(errorModelBody) {
         message: errorModelBody
     });
 }
+
+function initDatetimepicker(obj) {
+	$(obj).datetimepicker({
+		autoclose: 1,
+		minView: 2
+	});
+}

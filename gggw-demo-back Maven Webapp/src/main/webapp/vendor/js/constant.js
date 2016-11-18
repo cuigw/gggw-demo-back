@@ -35,6 +35,13 @@ var CONSTANT = {
             processing      : false,            //隐藏加载提示,自行处理
             serverSide      : true,             //启用服务器端分页
             searching       : false             //禁用原生搜索
+        },
+        RENDER: {	 //常用render可以抽取出来，如日期时间、头像等
+            ELLIPSIS: function (data, type, row, meta) {
+                data = data||"";
+                return '<span title="' + data + '">' + data + '</span>';
+            }
         }
+
     }
 };

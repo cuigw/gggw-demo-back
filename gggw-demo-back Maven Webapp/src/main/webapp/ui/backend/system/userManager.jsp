@@ -56,6 +56,20 @@
                                             <option>注销</option>
                                         </select>
                                     </div>
+                                    <div class="form-group">
+                                        <label >创建日期：</label>
+                                        <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+						                    <input class="form-control" type="text" value="">
+											<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						                </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label >更新日期：</label>
+                                        <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+						                    <input class="form-control" type="text" value="">
+											<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						                </div>
+                                    </div>
                                     <button type="button" class="btn btn-outline btn-primary btn-sm"><i class="fa fa-search"></i>  查询</button>
                                 </form>
                             </div>
@@ -67,6 +81,7 @@
                                         <th>姓名</th>
                                         <th>手机号</th>
                                         <th>邮箱</th>
+                                        <th>用户状态</th>
                                         <th>操作</th>
                                     </tr>
                                 </thead>
@@ -90,6 +105,8 @@
 <script>
 
     $(document).ready(function() {
+    	initDatetimepicker($('.form_date'));
+    	
         // API:     http://datatables.club/reference/option/
         // EXAMPLE: http://datatables.club/example/user_share/mir/
 
@@ -108,6 +125,11 @@
                 { "data": "userName" },
                 { "data": "mobile" },
                 { "data": "email" },
+                { "data": "status" , 
+                	render : function(data,type, row, meta) {
+                    return '<i class="fa fa-male"></i> ' + ((data==8) ? "正常" : "停用");
+                	} 
+                },
                 { "data":  null }
             ],
             createdRow      :       function ( row, data, index ) {
@@ -117,13 +139,12 @@
                     $(row).addClass("success");
                 }*/
                 //给当前行某列加样式
-                debugger;
-                //$('td', row).eq(3).addClass(data.email == "cuigw0293@cairenhui.com" ? "text-success":"text-error");
+                $('td', row).eq(4).addClass( (data.status == 8) ? "text-success":"text-danger");
                 //不使用render，改用jquery文档操作呈现单元格
                 var $btnEdit =   $('<button type="button" class="btn btn-sm btn-primary btn-edit " >修改</button>  ');
                 var $btnDel  =   $('<button type="button" class="btn btn-sm btn-danger btn-del " >删除</button>');
-                $('td', row).eq(4).text("");
-                $('td', row).eq(4).append($btnEdit).append("  ").append($btnDel);
+                $('td', row).eq(5).text("");
+                $('td', row).eq(5).append($btnEdit).append("  ").append($btnDel);
             }
         }));
 
