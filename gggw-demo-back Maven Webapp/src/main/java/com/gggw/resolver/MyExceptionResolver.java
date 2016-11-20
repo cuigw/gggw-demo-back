@@ -48,7 +48,7 @@ public class MyExceptionResolver extends AbstractHandlerExceptionResolver{
 		HandlerMethod method = (HandlerMethod)handler;
 		ResponseBody anno = method.getMethodAnnotation(ResponseBody.class);
 		RestController rest = method.getBeanType().getAnnotation(RestController.class);
-		
+
 		if (anno != null || rest != null) {
 			MappingJackson2JsonView view = new MappingJackson2JsonView();
 			view.addStaticAttribute("error_no", "-1");

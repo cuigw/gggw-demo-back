@@ -2,6 +2,9 @@ package com.gggw.entity;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
+
+
 /**
  * ClassName:PageForm <br/>
  * Function: TODO ADD FUNCTION. <br/>
@@ -9,11 +12,11 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author   cgw 
  */
 public class PageForm {
-	@NotBlank
+	@NotNull
 	private int draw;
-	@NotBlank
+	@NotNull
 	private int start;
-	@NotBlank
+	@NotNull
 	private int length;
 	
 	public int getDraw() {

@@ -78,6 +78,7 @@ public class ImageCodeServiceImpl implements IImageCodeService{
 			rippleFilter1.setYWavelength(FILTER_ARGS_2[4]);
 			rippleFilter1.setEdgeAction(FILTER_ARGS_2[5]);
 			String holidayPath = ImageCodeServiceImpl.class.getClassLoader().getResource("swisse_0.ttf").getPath();
+			holidayPath = java.net.URLDecoder.decode(holidayPath, "utf-8");
 			File file = new File(holidayPath);
 			java.io.FileInputStream fi;
 			fi = new java.io.FileInputStream(file);

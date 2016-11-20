@@ -89,11 +89,62 @@
         from BASE_SYS_USER
     </select>
 
-    <select id="selectAllPage" resultMap="BaseSysUserResultMap">
+    <select id="selectByUserPageCount" resultType="java.lang.Integer">
+        select count(*)
+        from BASE_SYS_USER	u
+        <where>
+            <if test="userNo!=null and userNo!='' ">
+                instr(u.USER_NO, #{userNo} )  &gt; 0
+            </if>
+            <if test="userName!=null and userName!='' ">
+                AND 	instr(u.USER_NAME, #{userName} )  &gt; 0
+            </if>
+            <if test="email!=null and email!='' ">
+                AND  	instr(u.EMAIL, #{email} )  &gt; 0
+            </if>
+            <if test="mobile!=null and mobile!='' ">
+                AND  	instr(u.MOBILE, #{mobile} )  &gt; 0
+            </if>
+            <if test="status!=null and status!='' ">
+                AND  	STATUS = #{status}
+            </if>
+            <if test="createDateStart!=null and createDateStart!='' ">
+                AND  DATE_FORMAT(CREATE_DATE, '%Y-%m-%d') &gt;= DATE_FORMAT( #{createDateStart}, '%Y-%m-%d')
+            </if>
+            <if test="createDateEnd!=null and createDateEnd!='' ">
+                AND  DATE_FORMAT(CREATE_DATE, '%Y-%m-%d') &lt;= DATE_FORMAT( #{createDateEnd}, '%Y-%m-%d')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByUserPage" resultMap="BaseSysUserResultMap">
         select USER_ID, USER_NO, USER_PWD, USER_NAME, ROLE_ID, MOBILE, EMAIL, PHONE, QQ,
         GENDER, STATUS, SALT, LAST_LOGIN_TIME, MAC, LOGIN_IPS, MEMO, CREATE_DATE, UPDATE_DATE,
         CREATE_BY, UPDATE_BY
-        from BASE_SYS_USER
+        from BASE_SYS_USER	u
+        <where>
+            <if test="userNo!=null and userNo!='' ">
+                instr(u.USER_NO, #{userNo} )  &gt; 0
+            </if>
+            <if test="userName!=null and userName!='' ">
+                AND 	instr(u.USER_NAME, #{userName} )  &gt; 0
+            </if>
+            <if test="email!=null and email!='' ">
+                AND  	instr(u.EMAIL, #{email} )  &gt; 0
+            </if>
+            <if test="mobile!=null and mobile!='' ">
+                AND  	instr(u.MOBILE, #{mobile} )  &gt; 0
+            </if>
+            <if test="status!=null and status!='' ">
+                AND  	STATUS = #{status}
+            </if>
+            <if test="createDateStart!=null and createDateStart!='' ">
+                AND  DATE_FORMAT(CREATE_DATE, '%Y-%m-%d') &gt;= DATE_FORMAT( #{createDateStart}, '%Y-%m-%d')
+            </if>
+            <if test="createDateEnd!=null and createDateEnd!='' ">
+                AND  DATE_FORMAT(CREATE_DATE, '%Y-%m-%d') &lt;= DATE_FORMAT( #{createDateEnd}, '%Y-%m-%d')
+            </if>
+        </where>  limit ${start}, ${length}
     </select>
   
   	<!-- 通过model查询 -->
@@ -104,22 +155,27 @@
 	    from BASE_SYS_USER	u
   		<where>  
 	        <if test="userNo!=null and userNo!='' ">  
-	           instr(u.USER_NO, #{userNo} )  > 0
+	           instr(u.USER_NO, #{userNo} )  &gt; 0
 	        </if>  
 	        <if test="userName!=null and userName!='' ">  
-	          AND 	instr(u.USER_NAME, #{userName} )  > 0
+	          AND 	instr(u.USER_NAME, #{userName} )  &gt; 0
 	        </if>   
 	        <if test="email!=null and email!='' ">  
-	          AND  	instr(u.EMAIL, #{email} )  > 0
+	          AND  	instr(u.EMAIL, #{email} )  &gt; 0
 	        </if>  
 	        <if test="mobile!=null and mobile!='' ">  
-	          AND  	instr(u.MOBILE, #{mobile} )  > 0
+	          AND  	instr(u.MOBILE, #{mobile} )  &gt; 0
 	        </if>  
-	        <if test="status!=null and status!='' ">  
+	        <if test="status!=null and status!='' ">
 	          AND  	STATUS = #{status}
-	        </if>  
-	        
-	        select * from BASE_SYS_USER	u where DATE_FORMAT(CREATE_DATE, '%Y-%m-%d') > DATE_FORMAT( '2016-11-17', '%Y-%m-%d') 
+	        </if>
+            <if test="createDateStart!=null and createDateStart!='' ">
+                AND  DATE_FORMAT(CREATE_DATE, '%Y-%m-%d') &gt; = DATE_FORMAT( #{createDateStart}, '%Y-%m-%d')
+            </if>
+            <if test="createDateEnd!=null and createDateEnd!='' ">
+                AND  DATE_FORMAT(CREATE_DATE, '%Y-%m-%d') &lt;= DATE_FORMAT( #{createDateEnd}, '%Y-%m-%d')
+            </if>
+
     	</where>  
   	</select> 	
   
