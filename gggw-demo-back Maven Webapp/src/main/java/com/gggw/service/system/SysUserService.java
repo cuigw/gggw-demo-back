@@ -34,7 +34,14 @@ public class SysUserService {
 
 	@Resource(name = "daoSupport")
 	private DaoSupport dao;
-	
+
+	/**
+	 * 根据主键查找
+	 */
+	public BaseSysUser findByUserId(int userId)throws Exception{
+		return (BaseSysUser)dao.findForObject("BaseSysUserMapper.selectByPrimaryKey", userId);
+	}
+
 	/**
 	 * findByUserNo:(通过登录的用户名查询用户). <br/>
 	 */
@@ -57,10 +64,31 @@ public class SysUserService {
 	}
 
 	/**
+	 * 根据User查询
+	 */
+	public List<BaseSysUser> selectByUserPage(Map<String, String> params) throws Exception{
+		return (List<BaseSysUser>) dao.findForList("BaseSysUserMapper.selectByUserPage", params);
+	}
+
+	/**
+	 * 根据User查询总数
+	 */
+	public Integer selectByUserPageCount(Map<String, String> params) throws Exception{
+		return (Integer)dao.findForObject("BaseSysUserMapper.selectByUserPageCount", params);
+	}
+
+	/**
 	 * 新增用户
 	 */
 	public void addUser(BaseSysUser baseSysUser) throws Exception{
 		dao.findForObject("BaseSysUserMapper.insert", baseSysUser);
+	}
+
+	/**
+	 * 删除用户
+	 */
+	public void delUser(int userId) throws Exception{
+		dao.findForObject("BaseSysUserMapper.deleteByPrimaryKey", userId);
 	}
 }
 

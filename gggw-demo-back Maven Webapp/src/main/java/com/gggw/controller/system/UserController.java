@@ -9,6 +9,7 @@ import com.gggw.entity.system.BaseSysUser;
 import com.gggw.result.SisapResult;
 import com.gggw.service.system.SysUserService;
 
+import com.gggw.util.PageData;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,12 +71,11 @@ public class UserController extends BaseController{
 	public Object ajaxUserList(@Valid PageForm pageForm) {
 		List<BaseSysUser> userList = new ArrayList<BaseSysUser>();
 		Map<String, Integer> params = new HashMap<String, Integer>();
+		PageData requestParam = this.getPageData();
 		int userListCount = 0;
 		try {
-			params.put("start", pageForm.getStart());
-			params.put("length", pageForm.getLength());
-			userList = sysUserService.getUserListAll(params);
-			userListCount = sysUserService.getUserListAllCount();
+			userList = sysUserService.selectByUserPage(requestParam);
+			userListCount = sysUserService.selectByUserPageCount(requestParam);
 		} catch (Exception e) {
 			logger.error("UserController --> ajaxUserList error!", e);
 		}
@@ -109,7 +109,32 @@ public class UserController extends BaseController{
 		}
 		return sisapResult;
 	}
-	
+
+	/**
+	 * ajax删除用户
+	 */
+	@RequestMapping(value="ajaxUserDel")
+	@ResponseBody
+	public Object ajaxUserDel() {
+		SisapResult sisapResult = new SisapResult("0", "删除成功!");
+		BaseSysUser baseSysUser = new BaseSysUser();
+		try {
+			PageData requestParam = this.getPageData();
+			int userId = Integer.parseInt(requestParam.get("userId").toString());
+			BaseSysUser userIsExist = sysUserService.findByUserId(userId);
+			if (null == userIsExist) {
+				sisapResult.setError_no("2");
+				sisapResult.setError_info("记录不存在");
+				return sisapResult;
+			}
+			sysUserService.delUser(userId);
+		} catch (Exception e) {
+			logger.error("UserController --> ajaxUserEdit error!");
+			sisapResult.setError_no("1");
+			sisapResult.setError_info("异常");
+		}
+		return sisapResult;
+	}
 	//==================================       ajaxFunction end          =====================================//
 }
 

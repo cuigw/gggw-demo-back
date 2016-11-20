@@ -29,7 +29,7 @@
                     <div class="panel panel-default">
                         <div>
                             <ol class="breadcrumb">
-							  <li><a href="#">系统设置</a></li>
+							  <li><a href="">系统设置</a></li>
 							  <li><a href="#" onclick="toPage(this, '/toUser', '')">用户管理</a></li>
 							  <li class="active">添加用户</li>
 							</ol>

@@ -45,3 +45,53 @@ function initDatetimepicker(obj) {
 		minView: 2
 	});
 }
+
+function buildPageForm(data) {
+    return "&start=" + data.start + "&length=" + data.length + "&draw=" + data.draw;
+}
+
+//删除修改操作封装
+var Manage = {
+    delete :  function del(table, url, obj) {
+        debugger;
+        var a = $.param(obj);
+        BootstrapDialog.show({
+            title: '提示',
+            message: '亲，确定删除该条记录吗?',
+            buttons: [
+                {
+                    label: '确定',
+                    action: function (dialog) {
+                        $.ajax({
+                            url : url+"?rnd=" + new Date().getTime(),
+                            type: "POST",
+                            data: $.param(obj),
+                            success: function(result) {
+                                debugger;
+                                dialog.close();
+                                if (result.error_no == 0) {
+                                    showError("删除成功！");
+                                    table.ajax.reload();
+                                } else {
+                                    showError("删除失败:" + result.error_info);
+                                }
+                            },
+                            error: function(result) {
+                                debugger;
+                                dialog.close();
+                                showError("删除失败:" + result.error_info);
+                            }
+
+                        });
+                    }
+                },
+                {
+                    label: '取消',
+                    action: function(dialog) {
+                        dialog.close();
+                    }
+                }]
+        });
+
+    }
+}

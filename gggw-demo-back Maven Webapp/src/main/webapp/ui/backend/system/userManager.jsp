@@ -19,14 +19,15 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            DataTable add by cgw   搜索功能需要优化 , 使用$("#form").serializeArray();传值
-                        </div>
+                            <ol class="breadcrumb">
+                                <li><a href="">系统设置</a></li>
+                                <li><a href="#" onclick="toPage(this, '/toUser', '')">用户管理</a></li>
+                            </ol>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
 
                             <div class="well">
-                                <form class="form-inline" role="form">
+                                <form class="form-inline" role="form" id="searchForm">
                                     <div class="form-group">
                                         <label >用户编号：</label>
                                         <input type="text" class="form-control" id="userNo" name="userNo" placeholder="请输入用户编号">
@@ -41,36 +42,37 @@
                                     </div>
                                     <div class="form-group">
                                         <label >性别：</label>
-                                        <select class="form-control">
-                                            <option selected>全部</option>
+                                        <select class="form-control" id="gender" name="gender">
+                                            <option selected value="">全部</option>
                                             <option>男</option>
                                             <option>女</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label >状态：</label>
-                                        <select class="form-control">
-                                            <option selected>全部</option>
+                                        <select class="form-control" id="status" name="status">
+                                            <option selected value="">全部</option>
                                             <option>正常</option>
                                             <option>停用</option>
                                             <option>注销</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label >创建日期：</label>
+                                        <label >创建日期（开始）：</label>
                                         <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-						                    <input class="form-control" type="text" value="">
+						                    <input class="form-control" type="text" value="" id="createDateStart" name="createDateStart">
 											<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 						                </div>
                                     </div>
                                     <div class="form-group">
-                                        <label >更新日期：</label>
+                                        <label >创建日期（结束）：</label>
                                         <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-						                    <input class="form-control" type="text" value="">
+						                    <input class="form-control" type="text" value="" id="createDateEnd" name="createDateEnd">
 											<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 						                </div>
                                     </div>
-                                    <button type="button" class="btn btn-outline btn-primary btn-sm"><i class="fa fa-search"></i>  查询</button>
+                                    <button type="button" class="btn btn-primary btn-sm" id="searchBtn"><i class="fa fa-search"></i>  查询</button>
+                                    <button type="reset" class="btn btn-default btn-sm"><i class="fa fa-search"></i>  重置</button>
                                 </form>
                             </div>
 
@@ -119,9 +121,23 @@
             //order			: 		[],          			//取消默认排序查询,否则复选框一列会出现小箭头
             ordering		: 		false,					//这地方true的话css冲突了.sorting这个class冲突 
            	scrollY			: 		500,
-            ajax            :       {
-                    url : "${contextPath }/ajaxUserList",
-                    type: "POST"
+            ajax            :        function(data, callback, settings) {
+                    var searchForm =  $("#searchForm").serializeArray();
+                    //组装分页参数
+                    var PageForm = buildPageForm(data);
+                    $.ajax({
+                        url : "${contextPath }/ajaxUserList?rnd=" + new Date().getTime() + PageForm,
+                        type: "POST",
+                        data: searchForm,
+                        success: function(result) {
+                                //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                                //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+                                callback(result);
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            showError("查询失败");
+                        }
+                    });
             },
             columns         :       [
                 { "data": "userNo" },
@@ -160,26 +176,19 @@
         $table.on("click",".btn-del",function() {
             var item = _table.row($(this).closest('tr')).data();
             $(this).closest('tr').addClass("info").siblings().removeClass("info");
-            del(item)
+            Manage.delete(_table,"${contextPath }/ajaxUserDel", item);
         });
 
         //点击编辑按钮
         $table.on("click",".btn-edit",function() {
-            debugger;
             var item = _table.row($(this).closest('tr')).data();
             $(this).closest('tr').addClass("info").siblings().removeClass("info");
-            edit(item)
+        });
+
+        //点击搜索按钮
+        $("#searchBtn").click(function(){
+            searchForm = $("#searchForm").serializeArray();
+            _table.draw();
         });
     });
-
-    function del(obj) {
-        BootstrapDialog.show({
-            message: 'Hi Apple!'
-        });
-        alert("数据已经删除!" + obj.userNo + "   " + obj.userName);
-    }
-
-    function edit(obj) {
-        alert("数据已经编辑!" + obj.userNo + "   " + obj.userName);
-    }
 </script>
