@@ -14,7 +14,7 @@
     <result column="GENDER" jdbcType="VARCHAR" property="gender" />
     <result column="STATUS" jdbcType="INTEGER" property="status" />
     <result column="SALT" jdbcType="VARCHAR" property="salt" />
-    <result column="LAST_LOGIN_TIME" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="LAST_LOGIN_TIME" jdbcType="VARCHAR" property="lastLoginTime" />
     <result column="MAC" jdbcType="VARCHAR" property="mac" />
     <result column="LOGIN_IPS" jdbcType="VARCHAR" property="loginIps" />
     <result column="MEMO" jdbcType="VARCHAR" property="memo" />
@@ -39,34 +39,72 @@
     values (#{userId,jdbcType=INTEGER}, #{userNo,jdbcType=VARCHAR}, #{userPwd,jdbcType=VARCHAR}, 
       #{userName,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{salt,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER}, #{salt,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=VARCHAR}, 
       #{mac,jdbcType=VARCHAR}, #{loginIps,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, 
       #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}, #{createBy,jdbcType=INTEGER}, 
       #{updateBy,jdbcType=INTEGER})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="BaseSysUser">
+  <update id="updateByPrimaryKey" parameterType="java.lang.Integer">
     update BASE_SYS_USER
     <!-- 该标签会前置SET关键字，且消除无意义的逗号 -->  
     <set>
-      USER_NO = #{userNo,jdbcType=VARCHAR},
-      USER_PWD = #{userPwd,jdbcType=VARCHAR},
-      USER_NAME = #{userName,jdbcType=VARCHAR},
-      ROLE_ID = #{roleId,jdbcType=VARCHAR},
-      MOBILE = #{mobile,jdbcType=VARCHAR},
-      EMAIL = #{email,jdbcType=VARCHAR},
-      PHONE = #{phone,jdbcType=VARCHAR},
-      QQ = #{qq,jdbcType=VARCHAR},
-      GENDER = #{gender,jdbcType=VARCHAR},
-      STATUS = #{status,jdbcType=INTEGER},
-      SALT = #{salt,jdbcType=VARCHAR},
-      LAST_LOGIN_TIME = #{lastLoginTime,jdbcType=TIMESTAMP},
-      MAC = #{mac,jdbcType=VARCHAR},
-      LOGIN_IPS = #{loginIps,jdbcType=VARCHAR},
-      MEMO = #{memo,jdbcType=VARCHAR},
-      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
-      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
-      CREATE_BY = #{createBy,jdbcType=INTEGER},
-      UPDATE_BY = #{updateBy,jdbcType=INTEGER}
+      <if test="userNo!=null and userNo!='' ">
+      	USER_NO = #{userNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd!=null and userPwd!='' ">
+      	USER_PWD = #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="userName!=null and userName!='' ">
+     	USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId!=null and roleId!='' ">
+      	ROLE_ID = #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile!=null and mobile!='' ">
+      	MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email!=null and email!='' ">
+      	EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone!=null and phone!='' ">
+      	PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="qq!=null and qq!='' ">
+      	QQ = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="gender!=null and gender!='' ">
+      	GENDER = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="status!=null and status!='' ">
+      	STATUS = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="salt!=null and salt!='' ">
+      	SALT = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginTime!=null and lastLoginTime!='' ">
+      	LAST_LOGIN_TIME = #{lastLoginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="mac!=null and mac!='' ">
+      	MAC = #{mac,jdbcType=VARCHAR},
+      </if>
+      <if test="loginIps!=null and loginIps!='' ">
+      	LOGIN_IPS = #{loginIps,jdbcType=VARCHAR},
+      </if>
+      <if test="memo!=null and memo!='' ">
+      	MEMO = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate!=null and createDate!='' ">
+      	CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate!=null and updateDate!='' ">
+      	UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy!=null and createBy!='' ">
+      	CREATE_BY = #{createBy,jdbcType=INTEGER},
+      </if>
+      <if test="updateBy!=null and updateBy!='' ">
+      	UPDATE_BY = #{updateBy,jdbcType=INTEGER}
+      </if>
     </set>
     where USER_ID = #{userId,jdbcType=INTEGER}
   </update>
@@ -108,6 +146,9 @@
             <if test="status!=null and status!='' ">
                 AND  	STATUS = #{status}
             </if>
+            <if test="gender!=null and gender!='' ">
+                AND  	GENDER = #{gender}
+            </if>
             <if test="createDateStart!=null and createDateStart!='' ">
                 AND  DATE_FORMAT(CREATE_DATE, '%Y-%m-%d') &gt;= DATE_FORMAT( #{createDateStart}, '%Y-%m-%d')
             </if>
@@ -137,6 +178,9 @@
             </if>
             <if test="status!=null and status!='' ">
                 AND  	STATUS = #{status}
+            </if>
+            <if test="gender!=null and gender!='' ">
+                AND  	GENDER = #{gender}
             </if>
             <if test="createDateStart!=null and createDateStart!='' ">
                 AND  DATE_FORMAT(CREATE_DATE, '%Y-%m-%d') &gt;= DATE_FORMAT( #{createDateStart}, '%Y-%m-%d')

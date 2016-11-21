@@ -52,9 +52,7 @@ function buildPageForm(data) {
 
 //删除修改操作封装
 var Manage = {
-    delete :  function del(table, url, obj) {
-        debugger;
-        var a = $.param(obj);
+    del :  function del(table, url, obj) {
         BootstrapDialog.show({
             title: '提示',
             message: '亲，确定删除该条记录吗?',
@@ -93,5 +91,12 @@ var Manage = {
                 }]
         });
 
+    },
+    edit :  function edit(table, url, obj) {
+    	obj.operatType = "1";
+    	toPage("修改用户", url, $.param(obj));
+    },
+    getDict : function(dictEntry, data){
+    	
     }
 }
