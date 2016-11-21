@@ -201,6 +201,9 @@
   		    }
   			url = "${contextPath }" + url;
   			var title = obj.innerText;
+  			if (!title) {
+  				title = obj;
+  			}
   			$.ajax({
   				type : "GET",
   				url : url+"?rnd=" + new Date().getTime(),

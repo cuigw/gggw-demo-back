@@ -27,7 +27,7 @@ public class BaseSysUser {
 
     private String salt;
 
-    private Date lastLoginTime;
+    private String lastLoginTime;
 
     private String mac;
 
@@ -139,11 +139,11 @@ public class BaseSysUser {
         this.salt = salt == null ? null : salt.trim();
     }
 
-    public Date getLastLoginTime() {
+    public String getLastLoginTime() {
         return lastLoginTime;
     }
 
-    public void setLastLoginTime(Date lastLoginTime) {
+    public void setLastLoginTime(String lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
     }
 

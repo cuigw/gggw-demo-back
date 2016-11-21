@@ -19,7 +19,7 @@
 
 		<div class="row">
                 <div class="col-lg-12">
-                    <h3 class="page-header text-primary">添加新用户</h3>
+                    <h3 class="page-header text-primary"><c:if test="${operatType == '0' }">添加新用户</c:if><c:if test="${operatType == '1' }">修改用户</c:if> </h3>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -31,7 +31,7 @@
                             <ol class="breadcrumb">
 							  <li><a href="">系统设置</a></li>
 							  <li><a href="#" onclick="toPage(this, '/toUser', '')">用户管理</a></li>
-							  <li class="active">添加用户</li>
+							  <li class="active"><c:if test="${operatType == '0' }">添加新用户</c:if><c:if test="${operatType == '1' }">修改用户</c:if></li>
 							</ol>
                         </div>
                         <div class="panel-body">
@@ -40,13 +40,14 @@
                                     <form role="form" id="userForm">
                                         <div class="form-group has-feedback">
                                             <label>用户编号</label>
-                                            <input class="form-control" placeholder="请输入用户编号" name="userNo" id="userNo" valid="NotBlank">
+                                            <input class="form-control" placeholder="请输入用户编号" name="userNo" id="userNo" valid="NotBlank" value="${baseSysUser.userNo}">
                                             <span class="glyphicon  form-control-feedback"></span>
                                             <span class="text-danger">（*必填项）</span>
                                         </div>
+                                        <c:if test="${operatType == '0' }">
                                         <div class="form-group has-feedback">
                                             <label>密码</label>
-                                            <input type="password"   class="form-control" placeholder="请输入密码" name="userPwd" id="userPwd"  valid="NotBlank">
+                                            <input type="password"   class="form-control" placeholder="请输入密码" name="userPwd" id="userPwd"  valid="NotBlank" value="">
                                             <span class="glyphicon  form-control-feedback"></span>
                                             <p class="text-danger">（*必填项）</p>
                                         </div>
@@ -56,36 +57,38 @@
                                             <span class="glyphicon  form-control-feedback"></span>
                                             <p class="text-danger">（*必填项）</p>
                                         </div>
+                                        </c:if>
                                         <div class="form-group has-feedback">
                                             <label>姓名</label>
-                                            <input class="form-control" placeholder="请输入姓名" name="userName" id="userName"  valid="NotBlank">
+                                            <input class="form-control" placeholder="请输入姓名" name="userName" id="userName"  valid="NotBlank" value="${baseSysUser.userName}">
                                             <span class="glyphicon  form-control-feedback"></span>
                                             <p class="text-danger">（*必填项）</p>
                                         </div>
                                         <div class="form-group" >
                                             <label>性别</label>
                                             <select class="form-control" name="gender" id="gender">
-                                                <option>男</option>
-                                                <option>女</option>
+                                                <c:forEach items="${genderList}" var="item">
+                                            		<option value="${item.subEntry}"  <c:if test="${item.subEntry == baseSysUser.gender }">selected</c:if> >${item.dictPrompt}</option>
+                                            	</c:forEach>
                                             </select>
                                         </div>
                                         <div class="form-group has-feedback">
                                             <label>手机号码</label>
-                                            <input class="form-control" placeholder="请输入手机号码" name="mobile" id="mobile"  valid="NotBlank">
+                                            <input class="form-control" placeholder="请输入手机号码" name="mobile" id="mobile"  valid="NotBlank" value="${baseSysUser.mobile}">
                                         </div>
 
                                         <div class="form-group has-feedback">
                                             <label>邮箱</label>
-                                            <input class="form-control" placeholder="请输入邮箱" name="email" id="email"  valid="NotBlank">
+                                            <input class="form-control" placeholder="请输入邮箱" name="email" id="email"  valid="NotBlank" value="${baseSysUser.email}">
                                             <span class="glyphicon  form-control-feedback"></span>
                                             <p class="text-danger">（*必填项）</p>
                                         </div>
                                         <div class="form-group">
                                             <label>状态</label>
                                             <select class="form-control" name="status" id="status">
-                                                <option>正常</option>
-                                                <option>停用</option>
-                                                <option>注销</option>
+                                                <c:forEach items="${statusList}" var="item">
+                                            		<option value="${item.subEntry}" <c:if test="${item.subEntry == baseSysUser.status }">selected</c:if> >${item.dictPrompt}</option>
+                                            	</c:forEach>
                                             </select>
                                         </div>
                                         <div class="form-group has-feedback">
@@ -103,6 +106,10 @@
 
 										<div hidden>
 											<input name="operatType" value="${operatType}" >
+										</div>
+										
+										<div hidden>
+											<input name="userId" value="${baseSysUser.userId}" >
 										</div>
 
                                         <button type="button" class="btn btn-primary" id="commit">提   交</button>

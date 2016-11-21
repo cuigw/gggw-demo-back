@@ -90,5 +90,12 @@ public class SysUserService {
 	public void delUser(int userId) throws Exception{
 		dao.findForObject("BaseSysUserMapper.deleteByPrimaryKey", userId);
 	}
+	
+	/**
+	 * 修改用户
+	 */
+	public void updateUser(BaseSysUser baseSysUser) throws Exception{
+		dao.findForObject("BaseSysUserMapper.updateByPrimaryKey", baseSysUser);
+	}
 }
 

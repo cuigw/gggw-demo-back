@@ -44,17 +44,18 @@
                                         <label >性别：</label>
                                         <select class="form-control" id="gender" name="gender">
                                             <option selected value="">全部</option>
-                                            <option>男</option>
-                                            <option>女</option>
+                                            <c:forEach items="${genderList}" var="item">
+                                            	<option value="${item.subEntry}">${item.dictPrompt}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label >状态：</label>
                                         <select class="form-control" id="status" name="status">
                                             <option selected value="">全部</option>
-                                            <option>正常</option>
-                                            <option>停用</option>
-                                            <option>注销</option>
+                                            <c:forEach items="${statusList}" var="item">
+                                            	<option value="${item.subEntry}">${item.dictPrompt}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -120,7 +121,7 @@
             searching       :       false,                 //禁用原生搜索
             //order			: 		[],          			//取消默认排序查询,否则复选框一列会出现小箭头
             ordering		: 		false,					//这地方true的话css冲突了.sorting这个class冲突 
-           	scrollY			: 		500,
+           	scrollY			: 		500,					//表格高度，去掉的话   会自适应。
             ajax            :        function(data, callback, settings) {
                     var searchForm =  $("#searchForm").serializeArray();
                     //组装分页参数
@@ -146,7 +147,12 @@
                 { "data": "email" },
                 { "data": "status" , 
                 	render : function(data,type, row, meta) {
-                    return '<i class="fa fa-male"></i> ' + ((data==8) ? "正常" : "停用");
+                	//需要封装，不能这么实现   	 problem_20161121
+                	var statusName = "";
+                	if (data == 8){statusName = "正常";}
+                	if (data == 9){statusName = "停用";}
+                	if (data == 0){statusName = "注销";}
+                    return '<i class="fa fa-male"></i> ' + statusName;
                 	} 
                 },
                 { "data":  null }
@@ -176,13 +182,14 @@
         $table.on("click",".btn-del",function() {
             var item = _table.row($(this).closest('tr')).data();
             $(this).closest('tr').addClass("info").siblings().removeClass("info");
-            Manage.delete(_table,"${contextPath }/ajaxUserDel", item);
+            Manage.del(_table,"${contextPath }/ajaxUserDel", item);
         });
 
         //点击编辑按钮
         $table.on("click",".btn-edit",function() {
             var item = _table.row($(this).closest('tr')).data();
             $(this).closest('tr').addClass("info").siblings().removeClass("info");
+            Manage.edit(_table,"/toUserEdit", item);
         });
 
         //点击搜索按钮

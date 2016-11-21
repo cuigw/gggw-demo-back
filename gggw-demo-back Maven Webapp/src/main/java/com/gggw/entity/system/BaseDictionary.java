@@ -3,9 +3,9 @@ package com.gggw.entity.system;
 import java.util.Date;
 
 public class BaseDictionary {
-    private Integer id;
+    private String entryName;
 
-    private Integer dictEntry;
+    private String dictEntry;
 
     private String subEntry;
 
@@ -25,19 +25,20 @@ public class BaseDictionary {
 
     private Date updateTime;
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    public String getEntryName() {
+		return entryName;
+	}
 
-    public Integer getDictEntry() {
+	public void setEntryName(String entryName) {
+		this.entryName = entryName;
+	}
+
+	public String getDictEntry() {
         return dictEntry;
     }
 
-    public void setDictEntry(Integer dictEntry) {
+    public void setDictEntry(String dictEntry) {
         this.dictEntry = dictEntry;
     }
 

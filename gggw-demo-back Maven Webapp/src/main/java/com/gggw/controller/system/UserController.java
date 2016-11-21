@@ -5,12 +5,14 @@ import javax.validation.Valid;
 
 import com.gggw.entity.PageForm;
 import com.gggw.entity.Paginator;
+import com.gggw.entity.system.BaseDictionary;
 import com.gggw.entity.system.BaseSysUser;
 import com.gggw.result.SisapResult;
 import com.gggw.service.system.SysUserService;
 
 import com.gggw.util.PageData;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gggw.controller.base.BaseController;
+import com.gggw.core.cache.BaseDictionaryCache;
 import com.gggw.core.utils.AESUtil;
 
 import java.util.ArrayList;
@@ -38,13 +41,19 @@ public class UserController extends BaseController{
 
 	@Resource(name="sysUserService")
 	private SysUserService sysUserService;
+	@Autowired
+	private BaseDictionaryCache baseDictionaryCache;
 
 	/**
 	 * 进入用户管理页
 	 */
 	@RequestMapping(value="toUser")
 	public ModelAndView toUser()throws Exception{
-		ModelAndView modelAndView = new ModelAndView();
+		ModelAndView modelAndView = new ModelAndView();		
+		List<BaseDictionary> statusList = baseDictionaryCache.getDictionaryList("1000");
+		List<BaseDictionary> genderList = baseDictionaryCache.getDictionaryList("1100");
+		modelAndView.addObject("statusList", statusList);
+		modelAndView.addObject("genderList", genderList);
 		modelAndView.setViewName("ui/backend/system/userManager");
 		return modelAndView;
 	}
@@ -53,9 +62,17 @@ public class UserController extends BaseController{
 	 * 进入用户编辑页面（新增/修改）
 	 */
 	@RequestMapping(value="toUserEdit")
-	public ModelAndView toUserEdit(@RequestParam("operatType") String operatType)throws Exception{
+	public ModelAndView toUserEdit(BaseSysUser baseSysUser, @RequestParam("operatType") String operatType)throws Exception{
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("operatType", operatType);
+		List<BaseDictionary> statusList = baseDictionaryCache.getDictionaryList("1000");
+		List<BaseDictionary> genderList = baseDictionaryCache.getDictionaryList("1100");
+		modelAndView.addObject("statusList", statusList);
+		modelAndView.addObject("genderList", genderList);
+		if ("1".equals(operatType)) {
+			baseSysUser = sysUserService.findByUserId(baseSysUser.getUserId());
+			modelAndView.addObject("baseSysUser", baseSysUser);
+		}
 		modelAndView.setViewName("ui/backend/system/userEdit");
 		return modelAndView;
 	}
@@ -88,7 +105,7 @@ public class UserController extends BaseController{
 	@RequestMapping(value="ajaxUserEdit")
 	@ResponseBody
 	public Object ajaxUserEdit(BaseSysUser baseSysUser, @RequestParam("operatType") String operatType) {
-		SisapResult sisapResult = new SisapResult("0", "添加成功!");
+		SisapResult sisapResult = new SisapResult("0", "");
 		try {
 			
 			if ("0".equals(operatType)) {
@@ -100,7 +117,17 @@ public class UserController extends BaseController{
 				}
 				baseSysUser.setUserPwd(AESUtil.encrypt(baseSysUser.getUserPwd(), baseSysUser.getUserNo()+"nmb"));
 				sysUserService.addUser(baseSysUser);
-			}	
+				sisapResult.setError_info("添加成功!");
+			} else {
+				BaseSysUser userIsExist = sysUserService.findByUserId(baseSysUser.getUserId());
+				if (null == userIsExist) {
+					sisapResult.setError_no("1");
+					sisapResult.setError_info("该用户存在");
+					return sisapResult;
+				}
+				sysUserService.updateUser(baseSysUser);
+				sisapResult.setError_info("修改成功!");
+			}
 			
 		} catch (Exception e) {
 			logger.error("UserController --> ajaxUserEdit error!");
