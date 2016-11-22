@@ -193,6 +193,10 @@
     <!-- /#wrapper -->
   </body>
   <script>
+  		$(function(){
+  			getAllDict();
+  		});
+  
   		//使用ajax的方式跳转  避免重复刷新菜单和顶部栏
   		function toPage(obj, url, params) {
   			//如果指向地址为空

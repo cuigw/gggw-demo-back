@@ -2,6 +2,9 @@
  * Created by cgw on 2016-11-17.
  */
 
+//路径
+var contextPath = window.location.protocol+"//"+window.location.host+"/"+window.location.pathname.split("/")[1];
+
 //检验不为空
 function checkNotBlank(obj) {
     var valid = true;
@@ -49,6 +52,41 @@ function initDatetimepicker(obj) {
 function buildPageForm(data) {
     return "&start=" + data.start + "&length=" + data.length + "&draw=" + data.draw;
 }
+
+/**===================================   字典模块start   =========================================*/
+//定义字典
+var dictionaryList;
+function getAllDict() {
+	$.post( contextPath+"/getAllDictionary", "", function(result){
+		dictionaryList = result;
+	});
+}
+//定时任务 30分钟更新一次字典项 也可手动直接调用getAllDict()更新
+setInterval("getAllDict()", 30*60*1000);
+
+//获取指定字典子项列表
+function getDictionaryList(dictEntry){
+	var dictEntryList = dictionaryList[dictEntry];
+	return dictEntryList;
+}
+
+//根据数据字典项和子项查询，返回Dictionary对象
+function getDictionary(dictEntry, subEntry) {
+	var dictEntryList = getDictionaryList(dictEntry);
+	for(i in dictEntryList){
+		if(dictEntryList[i].subEntry == subEntry) {
+			return dictEntryList[i];
+		}
+	}
+}
+
+//根据数据字典项和子项查询，返回字典子项中文，不存在则返回子项值
+function getDictCaption(dictEntry, subEntry) {
+	var dictionary = getDictionary(dictEntry, subEntry);
+	return dictionary.dictPrompt;
+}
+
+/**===================================   字典模块end     =========================================*/
 
 //删除修改操作封装
 var Manage = {
