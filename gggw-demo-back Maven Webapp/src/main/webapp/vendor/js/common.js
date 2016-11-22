@@ -2,6 +2,9 @@
  * Created by cgw on 2016-11-17.
  */
 
+//路径
+var contextPath = window.location.protocol+"//"+window.location.host+"/"+window.location.pathname.split("/")[1];
+
 //检验不为空
 function checkNotBlank(obj) {
     var valid = true;
@@ -24,6 +27,7 @@ function checkErrorHandle(obj) {
     $(obj).attr("oninput", "valChange(this)");
 }
 
+//错误输入框重新输入后  样式恢复成正常
 function valChange(obj) {
     //js Dom 转为 jqery对象    obj     $(obj)
     $(obj).parent().removeClass("has-error");
@@ -39,6 +43,7 @@ function showError(errorModelBody) {
     });
 }
 
+//日期控件
 function initDatetimepicker(obj) {
 	$(obj).datetimepicker({
 		autoclose: 1,
@@ -46,9 +51,53 @@ function initDatetimepicker(obj) {
 	});
 }
 
+//分页查询固定参数
 function buildPageForm(data) {
     return "&start=" + data.start + "&length=" + data.length + "&draw=" + data.draw;
 }
+
+//地址栏改变触发的事件   用户后退操作
+function  hashChange(){
+	var href=location.hash;
+	href=href.substring(2);
+	var webInfo = href.split(";@");
+	toPage(webInfo[1], webInfo[0], "");
+}
+
+/**===================================   字典模块start   =========================================*/
+//定义字典
+var dictionaryList;
+function getAllDict() {
+	$.post( contextPath+"/getAllDictionary", "", function(result){
+		dictionaryList = result;
+	});
+}
+//定时任务 30分钟更新一次字典项 也可手动直接调用getAllDict()更新
+setInterval("getAllDict()", 30*60*1000);
+
+//获取指定字典子项列表
+function getDictionaryList(dictEntry){
+	var dictEntryList = dictionaryList[dictEntry];
+	return dictEntryList;
+}
+
+//根据数据字典项和子项查询，返回Dictionary对象
+function getDictionary(dictEntry, subEntry) {
+	var dictEntryList = getDictionaryList(dictEntry);
+	for(i in dictEntryList){
+		if(dictEntryList[i].subEntry == subEntry) {
+			return dictEntryList[i];
+		}
+	}
+}
+
+//根据数据字典项和子项查询，返回字典子项中文，不存在则返回子项值
+function getDictCaption(dictEntry, subEntry) {
+	var dictionary = getDictionary(dictEntry, subEntry);
+	return dictionary.dictPrompt;
+}
+
+/**===================================   字典模块end     =========================================*/
 
 //删除修改操作封装
 var Manage = {
@@ -95,8 +144,5 @@ var Manage = {
     edit :  function edit(table, url, obj) {
     	obj.operatType = "1";
     	toPage("修改用户", url, $.param(obj));
-    },
-    getDict : function(dictEntry, data){
-    	
     }
 }
