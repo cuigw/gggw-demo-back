@@ -133,8 +133,5 @@ var Manage = {
     edit :  function edit(table, url, obj) {
     	obj.operatType = "1";
     	toPage("修改用户", url, $.param(obj));
-    },
-    getDict : function(dictEntry, data){
-    	
     }
 }

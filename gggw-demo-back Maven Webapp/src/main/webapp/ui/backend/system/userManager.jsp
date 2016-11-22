@@ -147,12 +147,6 @@
                 { "data": "email" },
                 { "data": "status" , 
                 	render : function(data,type, row, meta) {
-                	//需要封装，不能这么实现   	 problem_20161121
-                	var statusName = "";
-                	/*
-                	if (data == 8){statusName = "正常";}
-                	if (data == 9){statusName = "停用";}
-                	if (data == 0){statusName = "注销";}*/
                     return '<i class="fa fa-male"></i> ' + getDictCaption("1000", data);
                 	} 
                 },
