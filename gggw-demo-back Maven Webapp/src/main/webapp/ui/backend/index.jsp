@@ -195,6 +195,10 @@
   <script>
   		$(function(){
   			getAllDict();
+  			
+  			$(window).bind('hashchange', function () {
+	    		hashChange();
+			}); 
   		});
   
   		//使用ajax的方式跳转  避免重复刷新菜单和顶部栏
@@ -203,21 +207,21 @@
   		    if (!url) {
   		    	return;
   		    }
-  			url = "${contextPath }" + url;
+  			completeUrl = "${contextPath }" + url;
   			var title = obj.innerText;
   			if (!title) {
   				title = obj;
   			}
   			$.ajax({
   				type : "GET",
-  				url : url+"?rnd=" + new Date().getTime(),
+  				url : completeUrl+"?rnd=" + new Date().getTime(),
   				dataType : "text",
   				data : params,
          		success : function(data) {
          			//修改title
          			$(document).attr("title", title);
          			//修改地址
-         			//history.pushState(null, title ,url);
+         			history.pushState(null, title ,"#!" + url + ";@" + title);
          			$("#page-wrapper").html(data);
          		}
          	});

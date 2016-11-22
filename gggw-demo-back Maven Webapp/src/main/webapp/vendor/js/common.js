@@ -27,6 +27,7 @@ function checkErrorHandle(obj) {
     $(obj).attr("oninput", "valChange(this)");
 }
 
+//错误输入框重新输入后  样式恢复成正常
 function valChange(obj) {
     //js Dom 转为 jqery对象    obj     $(obj)
     $(obj).parent().removeClass("has-error");
@@ -42,6 +43,7 @@ function showError(errorModelBody) {
     });
 }
 
+//日期控件
 function initDatetimepicker(obj) {
 	$(obj).datetimepicker({
 		autoclose: 1,
@@ -49,8 +51,17 @@ function initDatetimepicker(obj) {
 	});
 }
 
+//分页查询固定参数
 function buildPageForm(data) {
     return "&start=" + data.start + "&length=" + data.length + "&draw=" + data.draw;
+}
+
+//地址栏改变触发的事件   用户后退操作
+function  hashChange(){
+	var href=location.hash;
+	href=href.substring(2);
+	var webInfo = href.split(";@");
+	toPage(webInfo[1], webInfo[0], "");
 }
 
 /**===================================   字典模块start   =========================================*/
