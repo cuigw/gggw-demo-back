@@ -37,7 +37,9 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    
+                                    <div class="zTreeDemoBackground left">
+										<ul id="treeDemo" class="ztree"></ul>
+									</div>
                                 </div>
                                 <!-- /.col-lg-6 (nested) -->
                                 
@@ -56,19 +58,46 @@
 
 <script>
 
-var setting = {                
-				view: {                  
-						showIcon: false  //隐藏icon 
-					},              
-				data: {                  
-					key: {                      
-						children: "setSubArea"  //更加json设置子节点的名称json格式                 
- 						}              
- 					},              
- 					check : {                  
- 						enable: true,                  
- 						autoCheckTrigger: false,                  
- 						chkboxType: { "Y": "p", "N": "s" }                  
- 					}              //每个节点上是否显示 CheckBox            
- 				};  
+var setting = {
+			check: {
+						enable: true
+					},
+			data: {
+						simpleData: {
+							enable: true
+						}
+					},
+			view: {
+					showIcon: false
+					}
+		};
+
+		var zNodes =[
+			
+			{ id:1, pId:0, name:"随意勾选 1"},
+				{ id:11, pId:1, name:"随意勾选 1-1"},
+					{ id:111, pId:11, name:"随意勾选 1-1-1"},
+					{ id:112, pId:11, name:"随意勾选 1-1-2"},
+				{ id:"12", pId:1, name:"随意勾选 1-2"},
+					{ id:121, pId:12, name:"随意勾选 1-2-1"},
+					{ id:122, pId:"12", name:"随意勾选 1-2-2"},
+			{ id:2, pId:0, name:"随意勾选 2"},
+				{ id:21, pId:2, name:"随意勾选 2-1"},
+				{ id:22, pId:2, name:"随意勾选 2-2"},
+					{ id:221, pId:22, name:"随意勾选 2-2-1"},
+					{ id:222, pId:22, name:"随意勾选 2-2-2"},
+				{ id:23, pId:2, name:"随意勾选 2-3"}
+			/**
+			{"name":"网站导航", open:true, children: [
+			{ "name":"google", "url":"http://g.cn", "target":"_blank"},
+			{ "name":"baidu", "url":"http://baidu.com", "target":"_blank"},
+			{ "name":"sina", "url":"http://www.sina.com.cn", "target":"_blank"}
+			]
+			}*/
+		];
+		
+
+$(document).ready(function(){
+			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+		});
 </script>
