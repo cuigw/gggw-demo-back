@@ -58,7 +58,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div><label>备注:</label></div>
-                                            <textarea class="form-control" rows="3" name="memo" id="memo"></textarea>
+                                            <textarea class="form-control" rows="3" name="memo" id="memo">${baseRole.memo}</textarea>
                                         </div>
 
 										<div hidden>
@@ -92,7 +92,7 @@
 	$(document).ready(	
 		function() {
 			var roleId = $("#roleId").val();
-			$.post("${contextPath }/ajaxGetAllResource", {roleId : 10000}, function(result) {
+			$.post("${contextPath }/ajaxGetAllResource", {roleId : roleId}, function(result) {
 				$.fn.zTree.init($("#resourceList"),
 						CONSTANT.ZTREE.DEFAULT_OPTION, result);
 			});

@@ -33,7 +33,6 @@ public class RoleResourceService {
 	public List<String> getByRoleId(String roleId) throws Exception{
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("roleId", roleId);
-		Object o =dao.findForList("BaseRoleResourceMapper.getByRoleId", params);
 		return (List<String>)dao.findForList("BaseRoleResourceMapper.getByRoleId", params);
 	}
 	
@@ -44,5 +43,12 @@ public class RoleResourceService {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("roleIds", roleIds);
 		return (List<String>)dao.findForList("BaseRoleResourceMapper.getByRoles", params);
+	}
+
+	/**
+	 * 通过roleId删除
+	 */
+	public void deleteByRoleId(int roleId) throws Exception{
+		dao.delete("BaseRoleResourceMapper.deleteByRoleId", roleId);
 	}
 }

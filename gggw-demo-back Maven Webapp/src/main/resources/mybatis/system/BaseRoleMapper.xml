@@ -19,9 +19,17 @@
   </insert>
   <update id="updateByPrimaryKey" parameterType="BaseRole" >
     update BASE_ROLE
-    set ROLE_CODE = #{roleCode,jdbcType=VARCHAR},
-      ROLE_NAME = #{roleName,jdbcType=VARCHAR},
-      MEMO = #{memo,jdbcType=VARCHAR}
+      <set>
+          <if test="roleCode!=null and roleCode!='' ">
+              ROLE_CODE = #{roleCode,jdbcType=VARCHAR},
+          </if>
+          <if test="roleName!=null and roleName!='' ">
+              ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+          </if>
+          <if test="memo!=null and memo!='' ">
+              MEMO = #{memo,jdbcType=VARCHAR},
+          </if>
+      </set>
     where ROLE_ID = #{roleId,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseRoleResultMap" parameterType="java.lang.Integer" >
@@ -61,6 +69,6 @@
             <if test="roleName!=null and roleName!='' ">
                 AND 	instr(r.ROLE_NAME, #{roleName} )  &gt; 0
             </if>
-        </where>  limit ${start}, ${length}
+        </where> ORDER BY ROLE_ID limit ${start}, ${length}
     </select>
 </mapper>

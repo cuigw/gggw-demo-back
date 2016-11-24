@@ -24,9 +24,24 @@ public class SysRoleService {
 	public int addRole(BaseRole baseRole) throws Exception{
 		return (Integer)dao.save("BaseRoleMapper.insert", baseRole);
 	}
+
+	/**
+	 * 删除角色
+	 */
+	public void delRole(int roleId) throws Exception{
+		dao.findForObject("BaseRoleMapper.deleteByPrimaryKey", roleId);
+	}
 	
 	public BaseRole findByCode(BaseRole baseRole) throws Exception{
 		return (BaseRole)dao.findForObject("BaseRoleMapper.findByCode", baseRole);
+	}
+
+	public BaseRole findById(BaseRole baseRole) throws Exception{
+		return (BaseRole)dao.findForObject("BaseRoleMapper.selectByPrimaryKey", baseRole);
+	}
+
+	public void updateRole(BaseRole baseRole) throws Exception{
+		dao.update("BaseRoleMapper.updateByPrimaryKey", baseRole);
 	}
 	
 	/**
