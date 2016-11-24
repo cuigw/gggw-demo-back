@@ -10,7 +10,7 @@
     delete from BASE_ROLE_RESOURCE
     where ROLE_RESOURCE_ID = #{roleResourceId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="BaseRoleResource" >
+  <insert id="insert" parameterType="BaseRoleResource" useGeneratedKeys="true" keyProperty="roleResourceId">
     insert into BASE_ROLE_RESOURCE (ROLE_RESOURCE_ID, ROLE_ID, RESOURCE_ID
       )
     values (#{roleResourceId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{resourceId,jdbcType=INTEGER}

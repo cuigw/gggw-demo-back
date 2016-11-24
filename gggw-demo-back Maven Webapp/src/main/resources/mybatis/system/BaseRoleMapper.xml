@@ -11,10 +11,10 @@
     delete from BASE_ROLE
     where ROLE_ID = #{roleId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="BaseRole" >
-    insert into BASE_ROLE (ROLE_ID, ROLE_CODE, ROLE_NAME, 
+  <insert id="insert" parameterType="BaseRole" useGeneratedKeys="true" keyProperty="roleId">
+    insert into BASE_ROLE (ROLE_CODE, ROLE_NAME, 
       MEMO)
-    values (#{roleId,jdbcType=INTEGER}, #{roleCode,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, 
+    values (#{roleCode,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, 
       #{memo,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="BaseRole" >
@@ -32,5 +32,9 @@
   <select id="selectAll" resultMap="BaseRoleResultMap" >
     select ROLE_ID, ROLE_CODE, ROLE_NAME, MEMO
     from BASE_ROLE
+  </select>
+  <select id="findByCode" resultMap="BaseRoleResultMap" >
+    select ROLE_ID, ROLE_CODE, ROLE_NAME, MEMO
+    from BASE_ROLE where ROLE_CODE = #{roleCode,jdbcType=VARCHAR}
   </select>
 </mapper>
