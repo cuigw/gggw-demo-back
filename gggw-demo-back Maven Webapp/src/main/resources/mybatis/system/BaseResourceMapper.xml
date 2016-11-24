@@ -57,7 +57,7 @@
   <select id="selectAll" resultMap="BaseResourceResultMap" >
     select RESOURCE_ID, RESOURCE_CODE, RESOURCE_NAME, RESOURCE_TYPE, DESCRIPTION, URL, 
     URL_INNER, PARENT_ID, ORDER_NUM, CLASS_STYLE, ICON, MEMO, IS_ACTIVE
-    from BASE_RESOURCE
+    from BASE_RESOURCE order by RESOURCE_ID
   </select>
 
     <select id="getKidResources" resultMap="BaseResourceResultMap" >

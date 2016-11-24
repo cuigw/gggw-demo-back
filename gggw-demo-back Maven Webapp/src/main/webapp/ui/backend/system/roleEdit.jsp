@@ -98,6 +98,10 @@ var setting = {
 		
 
 $(document).ready(function(){
-			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        $.post("${contextPath }/getAllResource", "", function(result){
+            debugger;
+            $.fn.zTree.init($("#treeDemo"), setting, result);
+        })
+
 		});
 </script>
