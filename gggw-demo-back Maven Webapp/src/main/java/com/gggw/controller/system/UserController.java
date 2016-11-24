@@ -87,7 +87,6 @@ public class UserController extends BaseController{
 	@ResponseBody
 	public Object ajaxUserList(@Valid PageForm pageForm) {
 		List<BaseSysUser> userList = new ArrayList<BaseSysUser>();
-		Map<String, Integer> params = new HashMap<String, Integer>();
 		PageData requestParam = this.getPageData();
 		int userListCount = 0;
 		try {

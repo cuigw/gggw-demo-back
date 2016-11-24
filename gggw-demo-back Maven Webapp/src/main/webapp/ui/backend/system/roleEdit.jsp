@@ -66,7 +66,7 @@
 										</div>
 										
 										<div hidden>
-											<input name="roleId" value="${baseRole.roleId}" >
+											<input name="roleId" id="roleId" value="${baseRole.roleId}" >
 										</div>
 
                                         <button type="button" class="btn btn-primary" id="commit" onclick="getSelect()">提   交</button>
@@ -89,9 +89,10 @@
 <!-- page-wrapper   end -->
 
 <script>
-	$(document).ready(
+	$(document).ready(	
 		function() {
-			$.post("${contextPath }/ajaxGetAllResource", "", function(result) {
+			var roleId = $("#roleId").val();
+			$.post("${contextPath }/ajaxGetAllResource", {roleId : 10000}, function(result) {
 				$.fn.zTree.init($("#resourceList"),
 						CONSTANT.ZTREE.DEFAULT_OPTION, result);
 			});

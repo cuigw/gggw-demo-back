@@ -31,4 +31,22 @@
     select ROLE_RESOURCE_ID, ROLE_ID, RESOURCE_ID
     from BASE_ROLE_RESOURCE
   </select>
+  
+  <select id="getByRoles" resultType ="java.lang.String" parameterType="java.util.Map">
+        select DISTINCT(resource_id) from BASE_ROLE_RESOURCE
+        <where>
+        	<if test="roleIds!=null and roleIds!='' ">
+                ROLE_ID in (${roleIds})
+            </if>
+        </where>
+   </select>
+   
+   <select id="getByRoleId" resultType ="java.lang.String" parameterType="java.util.Map">
+        select resource_id from BASE_ROLE_RESOURCE
+        <where>
+        	<if test="roleId!=null and roleId!='' ">
+                ROLE_ID = #{roleId}
+            </if>
+        </where>
+   </select>
 </mapper>

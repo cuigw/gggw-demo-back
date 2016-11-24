@@ -1,6 +1,9 @@
 package com.gggw.controller.system;
 
 
+import com.gggw.entity.PageForm;
+import com.gggw.entity.Paginator;
+import com.gggw.entity.system.BaseDictionary;
 import com.gggw.entity.system.BaseResource;
 import com.gggw.entity.system.BaseRole;
 import com.gggw.entity.system.BaseRoleResource;
@@ -10,6 +13,7 @@ import com.gggw.service.system.SysResourceService;
 import com.gggw.service.system.SysRoleService;
 import com.gggw.util.PageData;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +28,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 /**
- * ClassName:RoleController <br/>
+ * ClassName:角色和资源管理器<br/>
  * Function: TODO ADD FUNCTION. <br/>
  * Date:     2016-11-23 下午4:36:19 <br/>
  * @author   cgw 
@@ -41,12 +47,25 @@ public class RoleResourceController extends BaseController{
 	private RoleResourceService roleResourceService;
 
 	/**
+	 * 进入角色管理页
+	 */
+	@RequestMapping(value="toRole")
+	public ModelAndView toRole()throws Exception{
+		ModelAndView modelAndView = new ModelAndView();		
+		modelAndView.setViewName("ui/backend/system/roleManager");
+		return modelAndView;
+	}
+	
+	/**
 	 * 进入角色编辑页面（新增/修改）
 	 */
 	@RequestMapping(value="toRoleEdit")
 	public ModelAndView toRoleEdit(BaseRole baseRole, @RequestParam("operatType") String operatType)throws Exception{
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("operatType", operatType);
+		if ("1".equals(operatType)) {
+			
+		}
 		modelAndView.setViewName("ui/backend/system/roleEdit");
 		return modelAndView;
 	}
@@ -54,11 +73,36 @@ public class RoleResourceController extends BaseController{
 	
 	//==================================       ajaxFunction start          =====================================//
 	/**
+	 * ajax 获取分页数据
+	 */
+	@RequestMapping(value="ajaxRoleList")
+	@ResponseBody
+	public Object ajaxRoleList(@Valid PageForm pageForm) {
+		List<BaseRole> roleList = new ArrayList<BaseRole>();
+		PageData requestParam = this.getPageData();
+		int roleListCount = 0;
+		try {
+			roleList = sysRoleService.selectByRolePage(requestParam);
+			roleListCount = sysRoleService.selectByRolePageCount(requestParam);
+		} catch (Exception e) {
+			logger.error("RoleController --> ajaxRoleList error!", e);
+		}
+		return new Paginator(roleListCount, roleListCount, roleList, pageForm.getDraw());
+	}
+	
+	/**
 	 * 获取所有资源
 	 */
 	@ResponseBody
 	@RequestMapping(value="ajaxGetAllResource")
 	public Object ajaxGetAllResource()throws Exception{
+		PageData requestParam = this.getPageData();
+		String roleId = requestParam.getString("roleId");
+		List<String> checkedResources = new ArrayList<String>();
+		if (StringUtils.isNotBlank(roleId)) {
+			checkedResources = roleResourceService.getByRoleId(roleId);
+			
+		}
 		List<BaseResource> allResourceList = sysResourceService.getAllResource();
 		List<Map<String, Object>>  resources = new ArrayList<Map<String, Object>>();
 		for (BaseResource br : allResourceList) {
@@ -66,6 +110,9 @@ public class RoleResourceController extends BaseController{
 			resource.put("id", br.getResourceId());
 			resource.put("pId", br.getParentId());
 			resource.put("name", br.getResourceName());
+			if (checkedResources.contains(br.getResourceId().toString())) {
+				resource.put("checked", true);
+			}
 			resources.add(resource);
 		}
 		return resources;
@@ -80,7 +127,7 @@ public class RoleResourceController extends BaseController{
 		SisapResult sisapResult = new SisapResult("0", "");		
 		PageData requestParam = this.getPageData();
 		try {
-			//if ("0".equals(operatType)) {
+			if ("0".equals(operatType)) {
 				sysRoleService.addRole(baseRole);
 				baseRole = sysRoleService.findByCode(baseRole);
 				String[] resources = requestParam.getString("resources").split(",");
@@ -93,7 +140,9 @@ public class RoleResourceController extends BaseController{
 					}			
 				}
 				sisapResult.setError_info("添加成功!");
-			//}			
+			} else {
+				sisapResult.setError_info("修改成功!");
+			}
 		} catch (Exception e) {
 			logger.error("RoleController --> ajaxRoleEdit error!", e);
 			sisapResult.setError_no("1");

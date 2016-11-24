@@ -1,5 +1,8 @@
 package com.gggw.service.system;
 
+import java.util.List;
+import java.util.Map;
+
 import com.gggw.dao.DaoSupport;
 import com.gggw.entity.system.BaseRole;
 
@@ -24,5 +27,19 @@ public class SysRoleService {
 	
 	public BaseRole findByCode(BaseRole baseRole) throws Exception{
 		return (BaseRole)dao.findForObject("BaseRoleMapper.findByCode", baseRole);
+	}
+	
+	/**
+	 * 分页查询
+	 */
+	public List<BaseRole> selectByRolePage(Map<String, String> params) throws Exception{
+		return (List<BaseRole>) dao.findForList("BaseRoleMapper.selectByRolePage", params);
+	}
+
+	/**
+	 * 分页查询总数
+	 */
+	public Integer selectByRolePageCount(Map<String, String> params) throws Exception{
+		return (Integer)dao.findForObject("BaseRoleMapper.selectByRolePageCount", params);
 	}
 }
