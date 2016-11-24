@@ -121,7 +121,7 @@ public class UserController extends BaseController{
 				BaseSysUser userIsExist = sysUserService.findByUserId(baseSysUser.getUserId());
 				if (null == userIsExist) {
 					sisapResult.setError_no("1");
-					sisapResult.setError_info("该用户存在");
+					sisapResult.setError_info("该用户不存在");
 					return sisapResult;
 				}
 				sysUserService.updateUser(baseSysUser);

@@ -64,7 +64,8 @@ public class RoleResourceController extends BaseController{
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("operatType", operatType);
 		if ("1".equals(operatType)) {
-			
+			baseRole = sysRoleService.findById(baseRole);
+			modelAndView.addObject("baseRole", baseRole);
 		}
 		modelAndView.setViewName("ui/backend/system/roleEdit");
 		return modelAndView;
@@ -126,21 +127,28 @@ public class RoleResourceController extends BaseController{
 	public Object ajaxRoleEdit(BaseRole baseRole, @RequestParam("operatType") String operatType)throws Exception{
 		SisapResult sisapResult = new SisapResult("0", "");		
 		PageData requestParam = this.getPageData();
+		String[] resources = requestParam.getString("resources").split(",");
 		try {
+			baseRole = sysRoleService.findByCode(baseRole);
 			if ("0".equals(operatType)) {
+				if (null != baseRole) {
+					sisapResult.setError_no("1");
+					sisapResult.setError_info("已存在");
+					return sisapResult;
+				}
 				sysRoleService.addRole(baseRole);
 				baseRole = sysRoleService.findByCode(baseRole);
-				String[] resources = requestParam.getString("resources").split(",");
-				if (resources.length > 0) {
-					for (String resourceId : resources) {
-						BaseRoleResource BaseRoleResource = new BaseRoleResource();
-						BaseRoleResource.setRoleId(baseRole.getRoleId());
-						BaseRoleResource.setResourceId(Integer.parseInt(resourceId));
-						roleResourceService.addRoleResource(BaseRoleResource);
-					}			
-				}
+				updateRoleResource(resources, baseRole);
 				sisapResult.setError_info("添加成功!");
 			} else {
+				if (null == baseRole) {
+					sisapResult.setError_no("1");
+					sisapResult.setError_info("该角色不存在");
+					return sisapResult;
+				}
+				sysRoleService.updateRole(baseRole);
+				roleResourceService.deleteByRoleId(baseRole.getRoleId());
+				updateRoleResource(resources, baseRole);
 				sisapResult.setError_info("修改成功!");
 			}
 		} catch (Exception e) {
@@ -150,6 +158,35 @@ public class RoleResourceController extends BaseController{
 		}
 		return sisapResult;
 	}
+
+	/**
+	 * ajax删除角色
+	 */
+	@RequestMapping(value="ajaxRoleDel")
+	@ResponseBody
+	public Object ajaxRoleDel(BaseRole baseRole) {
+		SisapResult sisapResult = new SisapResult("0", "删除成功!");
+		try {
+			roleResourceService.deleteByRoleId(baseRole.getRoleId());
+			sysRoleService.delRole(baseRole.getRoleId());
+		} catch (Exception e) {
+			logger.error("RoleController --> ajaxRoleDel error!", e);
+			sisapResult.setError_no("1");
+			sisapResult.setError_info("数据异常");
+		}
+		return sisapResult;
+	}
 	//==================================       ajaxFunction end          =====================================//
+
+	public void updateRoleResource(String[] resources, BaseRole baseRole ) throws Exception{
+		if (!("".equals(resources[0]))) {
+			for (String resourceId : resources) {
+				BaseRoleResource BaseRoleResource = new BaseRoleResource();
+				BaseRoleResource.setRoleId(baseRole.getRoleId());
+				BaseRoleResource.setResourceId(Integer.parseInt(resourceId));
+				roleResourceService.addRoleResource(BaseRoleResource);
+			}
+		}
+	}
 }
 

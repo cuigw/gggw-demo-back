@@ -10,6 +10,10 @@
     delete from BASE_ROLE_RESOURCE
     where ROLE_RESOURCE_ID = #{roleResourceId,jdbcType=INTEGER}
   </delete>
+    <delete id="deleteByRoleId" parameterType="java.lang.Integer" >
+        delete from BASE_ROLE_RESOURCE
+        where ROLE_ID = #{roleId,jdbcType=INTEGER}
+    </delete>
   <insert id="insert" parameterType="BaseRoleResource" useGeneratedKeys="true" keyProperty="roleResourceId">
     insert into BASE_ROLE_RESOURCE (ROLE_RESOURCE_ID, ROLE_ID, RESOURCE_ID
       )
@@ -32,7 +36,7 @@
     from BASE_ROLE_RESOURCE
   </select>
   
-  <select id="getByRoles" resultType ="java.lang.String" parameterType="java.util.Map">
+  <select id="getByRoles" resultType ="java.lang.String" parameterType="java.util.Map" >
         select DISTINCT(resource_id) from BASE_ROLE_RESOURCE
         <where>
         	<if test="roleIds!=null and roleIds!='' ">
@@ -41,7 +45,7 @@
         </where>
    </select>
    
-   <select id="getByRoleId" resultType ="java.lang.String" parameterType="java.util.Map">
+   <select id="getByRoleId" resultType ="java.lang.String" parameterType="java.util.Map" >
         select resource_id from BASE_ROLE_RESOURCE
         <where>
         	<if test="roleId!=null and roleId!='' ">
