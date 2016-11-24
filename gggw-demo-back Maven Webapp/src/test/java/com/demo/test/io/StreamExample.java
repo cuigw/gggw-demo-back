@@ -2,10 +2,14 @@ package com.demo.test.io;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.sun.org.apache.bcel.internal.generic.NEW;
 
@@ -199,11 +203,50 @@ public class StreamExample {
 		}
 	}  
 	
-	public static void main(String[] args) throws Exception {  
-	       
-        //createFile();  
-		//streamTest();
-		bufferStreamTest();
-    }  
+	public static void main(String[] args) throws Exception { 
+		  String str1 = "";
+		  List<String> list1 = new ArrayList<String>();
+		  FileInputStream fis1 = null;
+		  InputStreamReader isr1 = null;
+		  BufferedReader br1 = null; 
+		  fis1 = new FileInputStream("c:\\ht_mobile.txt"); 
+		  isr1 = new InputStreamReader(fis1);// InputStreamReader 是字节流通向字符流的桥梁,
+		  br1 = new BufferedReader(isr1);// 从字符输入流中读取文件中的内容,封装了一个new InputStreamReader的对象
+		  while ((str1 = br1.readLine()) != null) {
+			  list1.add(str1);
+		  }
+		  
+		  String str2 = "";
+		  List<String> list2 = new ArrayList<String>();
+		  FileInputStream fis2 = null;
+		  InputStreamReader isr2 = null;
+		  BufferedReader br2 = null; 
+		  fis2 = new FileInputStream("c:\\db.txt"); 
+		  isr2 = new InputStreamReader(fis2);// InputStreamReader 是字节流通向字符流的桥梁,
+		  br2 = new BufferedReader(isr2);// 从字符输入流中读取文件中的内容,封装了一个new InputStreamReader的对象
+		  while ((str2 = br2.readLine()) != null) {
+			  list2.add(str2);
+		  }
+		  
+		  for (String a : list1) {
+			  if (!(list2.contains(a))) {
+				  System.out.println(a);
+			  }
+		  }
+		  
+		  for (String a : list2) {
+			  if (!(list1.contains(a))) {
+				  System.out.println(a);
+			  }
+		  }
+		  
+		  System.out.println(list1.size()  + "      "+ list2.size());
+		  
+		  //15659157505
+		  //13680491909
+		  //18230255899
+		  
+		  //18856005298
+	}  
 }
 

@@ -43,5 +43,20 @@ var CONSTANT = {
             }
         }
 
+    },
+    ZTREE: {
+    	DEFAULT_OPTION: {
+			check : {
+				enable : true
+			},
+			data : {
+				simpleData : {
+					enable : true
+				}
+			},
+			view : {
+				showIcon : false
+			}
+		}
     }
 };

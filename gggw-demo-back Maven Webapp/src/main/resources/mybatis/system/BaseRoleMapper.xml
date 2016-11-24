@@ -11,10 +11,10 @@
     delete from BASE_ROLE
     where ROLE_ID = #{roleId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="BaseRole" >
-    insert into BASE_ROLE (ROLE_ID, ROLE_CODE, ROLE_NAME, 
+  <insert id="insert" parameterType="BaseRole" useGeneratedKeys="true" keyProperty="roleId">
+    insert into BASE_ROLE (ROLE_CODE, ROLE_NAME, 
       MEMO)
-    values (#{roleId,jdbcType=INTEGER}, #{roleCode,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, 
+    values (#{roleCode,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, 
       #{memo,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="BaseRole" >
@@ -33,4 +33,34 @@
     select ROLE_ID, ROLE_CODE, ROLE_NAME, MEMO
     from BASE_ROLE
   </select>
+  <select id="findByCode" resultMap="BaseRoleResultMap" >
+    select ROLE_ID, ROLE_CODE, ROLE_NAME, MEMO
+    from BASE_ROLE where ROLE_CODE = #{roleCode,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByRolePageCount" resultType="java.lang.Integer">
+  	 select count(*)
+        from BASE_ROLE	r
+        <where>
+        	<if test="roleCode!=null and roleCode!='' ">
+                instr(r.ROLE_CODE, #{roleCode} )  &gt; 0
+            </if>
+            <if test="userName!=null and userName!='' ">
+                AND 	instr(r.ROLE_NAME, #{roleName} )  &gt; 0
+            </if>
+        </where>
+  </select>
+  
+  <select id="selectByRolePage" resultMap="BaseRoleResultMap">
+        select ROLE_ID, ROLE_CODE, ROLE_NAME, MEMO
+    		from BASE_ROLE	r
+        <where>
+        	<if test="roleCode!=null and roleCode!='' ">
+                instr(r.ROLE_CODE, #{roleCode} )  &gt; 0
+            </if>
+            <if test="roleName!=null and roleName!='' ">
+                AND 	instr(r.ROLE_NAME, #{roleName} )  &gt; 0
+            </if>
+        </where>  limit ${start}, ${length}
+    </select>
 </mapper>
