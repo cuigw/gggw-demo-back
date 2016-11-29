@@ -86,7 +86,8 @@ public class LoginHandlerInterceptor extends HandlerInterceptorAdapter{
 		
 		System.out.println("LoginHandlerInterceptor  preHandle()===========登录拦截");
 		
-		throw new BizException("1", "拦截了");
+		return true;
+		//throw new BizException("1", "拦截了");
 	}
 	
 	
