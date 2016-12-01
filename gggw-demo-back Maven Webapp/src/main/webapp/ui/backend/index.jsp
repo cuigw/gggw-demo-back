@@ -86,7 +86,7 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h6 class="page-header"><i class="fa fa-pied-piper-alt fa-5x"></i>  </h6>
+                    <h6 class="page-header text-primary "><i class="fa fa-pied-piper-alt fa-5x fa-flip-horizontal"></i>  </h6>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -221,13 +221,14 @@
   			if (!title) {
   				title = obj;
   			}
-  			$("#page-wrapper").html('<h1>页面加载中...</h1>');
+  			$("#page-wrapper").html('<i style="margin-top:20%;margin-left:43%"  class="fa fa-spinner fa-5x fa-spinner fa-pulse text-primary"></i>');
   			$.ajax({
   				type : "GET",
   				url : completeUrl+"?rnd=" + new Date().getTime(),
   				dataType : "text",
   				data : params,
          		success : function(data) {
+         			debugger;
          			//修改title
          			$(document).attr("title", title);
          			//修改地址
