@@ -1,5 +1,6 @@
 package com.gggw.controller.system;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -34,8 +35,38 @@ public class ShortcutsAction extends BaseController{
 	 */
 	@RequestMapping(value="ajaxShutdown")
 	public void ajaxShutdown()throws Exception{
-		Runtime.getRuntime().exec("shutdown -s");
+		shutdown();
 	}
 	//==================================       ajaxFunction end            =====================================//
+	
+	
+	/** 
+     * 函数名:exec 
+     * 简单描述:执行command命令 
+     */  
+    public void exec(String command) throws Exception{  
+    	Runtime.getRuntime().exec(command);  
+    }  
+      
+    /** 
+     *关机  
+     */  
+    public void shutdown()  throws Exception{  
+       exec("shutdown -S ");  
+    }  
+      
+    /** 
+ 	 *重启
+     */  
+    public void restart() throws Exception {  
+       exec("shutdown -R ");  
+    }  
+      
+    /** 
+     *注销   
+     */  
+    public void logout() throws Exception {  
+       exec("shutdown -L ");  
+    }
 }
 
