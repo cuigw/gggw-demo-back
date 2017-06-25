@@ -28,4 +28,8 @@
 		</plugin>
 	</plugins>-->
 	
+	<plugins>
+		<plugin interceptor="com.gggw.core.intercepts.SqlCostInterceptor"></plugin>
+	</plugins>
+	
 </configuration>
