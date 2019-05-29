@@ -2,9 +2,6 @@ package com.demo.test.cache;
 
 import com.gggw.core.cache.PropertiesCache;
 
-import sun.tools.tree.SuperExpression;
-import sun.tools.tree.ThisExpression;
-
 /**
  * ClassName:TestPropertiesCache <br/>
  * Function: TODO ADD FUNCTION. <br/>

@@ -60,7 +60,7 @@ public class SimpleScheduledBeanPostProcessor extends ScheduledAnnotationBeanPos
         if (runnable != null) {
             cronTasks.remove(runnable);
         }
-        Class<?> targetClass = AopUtils.getTargetClass(bean);
+        Class<?>   = AopUtils.getTargetClass(bean);
         if (EasyAutotaskExecutor.class.isAssignableFrom(targetClass)) {
             EasyAutotaskExecutor executor = (EasyAutotaskExecutor)bean;
             if (!executor.inuse()) {// 轮询任务未启用
